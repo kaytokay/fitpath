@@ -27,7 +27,7 @@ stored only in your browser's `localStorage`, never in this repo.
 3. Paste your key into the **"Save Key"** field and click Save
 
 ## Live Demo
-👉 https://YOUR_USERNAME.github.io/fitpath/
+👉 https://kaytokay.github.io/fitpath/
 
 ## Build the Android APK (optional)
 ```bash
