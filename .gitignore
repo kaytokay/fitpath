@@ -1,0 +1,13 @@
+# Cordova build artifacts (if you add APK building later)
+platforms/
+plugins/
+node_modules/
+*.apk
+*.keystore
+
+# OS files
+.DS_Store
+Thumbs.db
+
+# Env/secrets
+.env
