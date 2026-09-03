@@ -12,13 +12,34 @@
     --warn:#fbbf24; --danger:#f87171; --text:#f1f5f9;
     --muted:#64748b; --subtle:#94a3b8;
   }
-  *{margin:0;padding:0;box-sizing:border-box;}
-  body{background:var(--bg);color:var(--text);font-family:'Cabinet Grotesk',sans-serif;min-height:100vh;overflow-x:hidden;}
-  body::before{content:'';position:fixed;inset:0;background:radial-gradient(ellipse 80% 60% at 20% 10%,rgba(110,231,183,.07) 0%,transparent 60%),radial-gradient(ellipse 60% 50% at 80% 80%,rgba(129,140,248,.07) 0%,transparent 60%);pointer-events:none;z-index:0;}
-  .container{position:relative;z-index:1;max-width:860px;margin:0 auto;padding:2rem 1.5rem 5rem;}
+  [data-theme="indigo"] {
+    --bg:#090d16; --surface:#0f172a; --card:#1e293b; --border:#334155;
+    --accent:#38bdf8; --accent2:#818cf8; --accent3:#c084fc;
+    --warn:#fde047; --danger:#fb7185; --text:#f8fafc;
+    --muted:#64748b; --subtle:#94a3b8;
+  }
+  [data-theme="ember"] {
+    --bg:#120c0a; --surface:#1c1310; --card:#291b16; --border:#432820;
+    --accent:#fb923c; --accent2:#f43f5e; --accent3:#facc15;
+    --warn:#f59e0b; --danger:#ef4444; --text:#fff7ed;
+    --muted:#78716c; --subtle:#a8a29e;
+  }
+  [data-theme="light"] {
+    --bg:#f8fafc; --surface:#ffffff; --card:#f1f5f9; --border:#cbd5e1;
+    --accent:#059669; --accent2:#4f46e5; --accent3:#db2777;
+    --warn:#d97706; --danger:#dc2626; --text:#0f172a;
+    --muted:#64748b; --subtle:#475569;
+  }
 
-  /* Header */
-  header{text-align:center;padding:2rem 0 1.5rem;}
+  *{margin:0;padding:0;box-sizing:border-box;}
+  body{background:var(--bg);color:var(--text);font-family:'Cabinet Grotesk',sans-serif;min-height:100vh;overflow-x:hidden;transition:background .3s,color .3s;}
+  body::before{content:'';position:fixed;inset:0;background:radial-gradient(ellipse 80% 60% at 20% 10%,rgba(110,231,183,.07) 0%,transparent 60%),radial-gradient(ellipse 60% 50% at 80% 80%,rgba(129,140,248,.07) 0%,transparent 60%);pointer-events:none;z-index:0;}
+  .container{position:relative;z-index:1;max-width:860px;margin:0 auto;padding:1.5rem 1.5rem 5rem;}
+
+  /* Header & Theme Bar */
+  .top-bar{display:flex;justify-content:flex-end;align-items:center;margin-bottom:.8rem;}
+  .theme-select{background:var(--surface);border:1px solid var(--border);border-radius:10px;color:var(--text);padding:.35rem .7rem;font-size:.78rem;font-weight:600;outline:none;cursor:pointer;}
+  header{text-align:center;padding:1rem 0 1.5rem;}
   .logo{display:inline-flex;align-items:center;gap:.6rem;font-family:'Clash Display',sans-serif;font-size:2rem;font-weight:700;letter-spacing:-.03em;color:var(--text);margin-bottom:.3rem;}
   .logo-dot{width:10px;height:10px;border-radius:50%;background:var(--accent);box-shadow:0 0 16px var(--accent);animation:pulse 2s infinite;}
   @keyframes pulse{0%,100%{opacity:1;transform:scale(1)}50%{opacity:.6;transform:scale(.85)}}
@@ -61,6 +82,13 @@
   .unit-btn{flex:1;padding:.65rem;border:none;background:transparent;color:var(--muted);font-family:'Cabinet Grotesk',sans-serif;font-size:.85rem;font-weight:500;cursor:pointer;transition:all .2s;}
   .unit-btn.active{background:rgba(110,231,183,.15);color:var(--accent);}
 
+  /* Feasibility Box */
+  .feasibility-box{padding:.8rem 1rem;border-radius:12px;font-size:.82rem;margin-top:.6rem;display:none;align-items:center;justify-content:space-between;gap:.8rem;}
+  .feasibility-box.show{display:flex;}
+  .feasibility-box.unrealistic{background:rgba(248,113,113,.1);border:1px solid rgba(248,113,113,.3);color:var(--danger);}
+  .feasibility-box.optimal{background:rgba(110,231,183,.1);border:1px solid rgba(110,231,183,.3);color:var(--accent);}
+  .feasibility-fix-btn{background:var(--surface);border:1px solid var(--border);border-radius:8px;color:var(--text);padding:.35rem .7rem;font-size:.75rem;cursor:pointer;font-weight:700;white-space:nowrap;}
+
   /* BMI */
   .bmi-display{text-align:center;padding:.4rem 0;}
   .bmi-number{font-family:'Clash Display',sans-serif;font-size:4.2rem;font-weight:700;line-height:1;background:linear-gradient(135deg,var(--accent),var(--accent2));-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;}
@@ -90,6 +118,7 @@
   .timeline-item:not(:last-child)::before{content:'';position:absolute;left:14px;top:30px;width:2px;height:calc(100% - 14px);background:var(--border);}
   .timeline-dot{width:28px;height:28px;border-radius:50%;border:2px solid var(--border);background:var(--surface);display:flex;align-items:center;justify-content:center;font-size:.75rem;flex-shrink:0;z-index:1;}
   .timeline-dot.active{border-color:var(--accent);background:rgba(110,231,183,.1);}
+  .timeline-dot.break{border-color:var(--warn);background:rgba(251,191,36,.1);color:var(--warn);}
   .timeline-content{padding-top:.25rem;}
   .timeline-week{font-size:.7rem;color:var(--muted);text-transform:uppercase;letter-spacing:.06em;margin-bottom:.12rem;}
   .timeline-text{font-size:.82rem;color:var(--subtle);}
@@ -213,6 +242,8 @@
   .ai-send-btn:hover{transform:translateY(-1px);box-shadow:0 6px 18px rgba(129,140,248,.4);}
   .ai-send-btn:disabled{opacity:.5;cursor:not-allowed;transform:none;}
   .ai-error-bubble{background:rgba(248,113,113,.08);border:1px solid rgba(248,113,113,.25);color:var(--danger);padding:.65rem 1rem;border-radius:12px;font-size:.8rem;margin-top:.5rem;}
+
+  /* Diet Details */
   .diet-toggle-btn{flex:1;padding:.6rem .5rem;border:1.5px solid var(--border);border-radius:11px;background:var(--surface);color:var(--subtle);font-family:'Cabinet Grotesk',sans-serif;font-size:.85rem;font-weight:600;cursor:pointer;transition:all .2s;text-align:center;}
   .diet-toggle-btn.active{border-color:var(--accent);background:rgba(110,231,183,.12);color:var(--accent);}
   .diet-toggle-btn:hover:not(.active){border-color:var(--subtle);color:var(--text);}
@@ -226,7 +257,6 @@
   .nutrient-targets{text-align:right;flex-shrink:0;}
   .nutrient-amount{font-family:'Clash Display',sans-serif;font-size:1rem;font-weight:600;}
   .nutrient-unit{font-size:.68rem;color:var(--muted);}
-  .nutrient-sub{font-size:.72rem;color:var(--muted);margin-top:.1rem;}
   .macro-ring-row{display:flex;align-items:center;justify-content:space-around;padding:.5rem 0 1rem;}
   .macro-ring{text-align:center;}
   .macro-ring svg{display:block;margin:0 auto .4rem;}
@@ -265,6 +295,16 @@
 </head>
 <body>
 <div class="container">
+  <!-- Theme Selection Bar -->
+  <div class="top-bar">
+    <select class="theme-select" id="themeSelect" onchange="changeTheme(this.value)">
+      <option value="cyber">Cyber Dark (Default)</option>
+      <option value="indigo">Midnight Indigo</option>
+      <option value="ember">Sunset Ember</option>
+      <option value="light">Clean Slate (Light)</option>
+    </select>
+  </div>
+
   <header>
     <div class="logo"><div class="logo-dot"></div>FitPath</div>
     <p>Your intelligent fitness companion</p>
@@ -294,19 +334,47 @@
       <div class="card">
         <div class="card-title"><div class="icon" style="background:rgba(110,231,183,.12);color:var(--accent)">👤</div>Tell us about yourself</div>
         <div class="form-grid">
-          <div class="form-group"><label>Age</label><input type="number" id="age" placeholder="25" min="10" max="100"></div>
-          <div class="form-group"><label>Biological Sex</label><select id="sex"><option value="">Select...</option><option value="male">Male</option><option value="female">Female</option></select></div>
-          <div class="form-group full"><label>Units</label><div class="unit-toggle"><button class="unit-btn active" onclick="setUnit('metric',event)">Metric (kg / cm)</button><button class="unit-btn" onclick="setUnit('imperial',event)">Imperial (lbs / in)</button></div></div>
-          <div class="form-group" id="wG"><label>Weight (kg)</label><input type="number" id="weight" placeholder="70"></div>
-          <div class="form-group" id="hG"><label>Height (cm)</label><input type="number" id="height" placeholder="170"></div>
+          <div class="form-group"><label>Age (5–100 yrs)</label><input type="number" id="age" placeholder="25" min="5" max="100" oninput="evaluateFeasibility()"></div>
+          <div class="form-group"><label>Biological Sex</label><select id="sex" onchange="evaluateFeasibility()"><option value="">Select...</option><option value="male">Male</option><option value="female">Female</option></select></div>
+          <div class="form-group full"><label>Units</label><div class="unit-toggle"><button class="unit-btn active" onclick="setUnit('metric',event)">Metric (kg / cm)</button><button class="unit-btn" onclick="setUnit('imperial',event)">Imperial (lbs / ft-in)</button></div></div>
+          
+          <div class="form-group" id="wG"><label id="lbl-weight">Weight (15–250 kg)</label><input type="number" id="weight" placeholder="70" min="15" max="250" step="0.1" oninput="evaluateFeasibility()"></div>
+          
+          <div class="form-group" id="hG">
+            <label id="lbl-height">Height (60–230 cm)</label>
+            <div id="hMetricWrap">
+              <input type="number" id="height" placeholder="170" min="60" max="230" step="0.1" oninput="evaluateFeasibility()">
+            </div>
+            <div id="hImpWrap" style="display:none;grid-template-columns:1fr 1fr;gap:.5rem;">
+              <input type="number" id="heightFt" placeholder="5 ft" min="2" max="7" oninput="evaluateFeasibility()">
+              <input type="number" id="heightIn" placeholder="8 in" min="0" max="11" oninput="evaluateFeasibility()">
+            </div>
+          </div>
+
           <div class="form-group full"><label>Activity Level</label><select id="activity"><option value="1.2">Sedentary (little/no exercise)</option><option value="1.375">Lightly active (1–3 days/week)</option><option value="1.55" selected>Moderately active (3–5 days/week)</option><option value="1.725">Very active (6–7 days/week)</option><option value="1.9">Extra active (twice daily)</option></select></div>
         </div>
       </div>
       <div class="card">
-        <div class="card-title"><div class="icon" style="background:rgba(129,140,248,.12);color:var(--accent2)">🎯</div>What's your goal?</div>
+        <div class="card-title"><div class="icon" style="background:rgba(129,140,248,.12);color:var(--accent2)">🎯</div>Goal & Dynamic Feasibility</div>
         <div class="form-grid">
-          <div class="form-group full"><label>Primary Goal</label><select id="goal"><option value="lose">Lose Weight</option><option value="maintain">Maintain Weight</option><option value="gain">Build Muscle / Gain Weight</option></select></div>
-          <div class="form-group full"><label>Timeline</label><select id="timeline"><option value="4">1 Month (Aggressive)</option><option value="8">2 Months (Moderate)</option><option value="12" selected>3 Months (Balanced)</option><option value="24">6 Months (Sustainable)</option></select></div>
+          <div class="form-group full"><label>Primary Goal</label><select id="goal" onchange="evaluateFeasibility()"><option value="lose">Lose Weight</option><option value="maintain">Maintain Weight</option><option value="gain">Build Muscle / Gain Weight</option></select></div>
+          <div class="form-group full">
+            <label>Timeline</label>
+            <select id="timeline" onchange="evaluateFeasibility()">
+              <option value="4">4 Weeks (1 Month)</option>
+              <option value="8">8 Weeks (2 Months)</option>
+              <option value="12" selected>12 Weeks (3 Months)</option>
+              <option value="24">24 Weeks (6 Months)</option>
+              <option value="36">36 Weeks (9 Months)</option>
+              <option value="52">52 Weeks (1 Year)</option>
+            </select>
+          </div>
+          <div class="form-group full">
+            <div class="feasibility-box" id="feasibilityBox">
+              <span id="feasibilityMsg">Evaluating biological feasibility...</span>
+              <button class="feasibility-fix-btn" id="feasibilityFixBtn" onclick="autoFixTimeline()">Auto-Adjust</button>
+            </div>
+          </div>
           <div class="form-group full"><label>Diet Preference</label><select id="dietPref"><option value="veg">🥦 Vegetarian</option><option value="nonveg">🍗 Non-Vegetarian</option></select></div>
         </div>
       </div>
@@ -323,7 +391,7 @@
           <div class="bmi-scale-labels"><span>Under&shy;weight<br>&lt;18.5</span><span>Normal<br>18.5–24.9</span><span>Over&shy;weight<br>25–29.9</span><span>Obese<br>&gt;30</span></div>
         </div>
         <div class="stats-row">
-          <div class="stat-box"><div class="stat-value" id="bmiIdeal" style="color:var(--accent)">--</div><div class="stat-label">Ideal Wt</div></div>
+          <div class="stat-box"><div class="stat-value" id="bmiIdeal" style="color:var(--accent)">--</div><div class="stat-label">Ideal Wt (IBW)</div></div>
           <div class="stat-box"><div class="stat-value" id="bmiGap" style="color:var(--warn)">--</div><div class="stat-label">Gap</div></div>
           <div class="stat-box"><div class="stat-value" id="bmiTDEE" style="color:var(--accent2)">--</div><div class="stat-label">Daily Cal</div></div>
         </div>
@@ -341,9 +409,9 @@
         <div class="card-title"><div class="icon" style="background:rgba(244,114,182,.12);color:var(--accent3)">🗓️</div>Your <span id="planWeeks" style="color:var(--accent)">12-Week</span> Action Plan</div>
         <ul class="plan-list" id="planList"></ul>
       </div>
-      <div class="section-title">Weekly Milestones</div>
+      <div class="section-title">Weekly Milestones & Diet Breaks</div>
       <div class="card"><div class="timeline" id="milestones"></div></div>
-      <div class="section-title">Workout Schedule</div>
+      <div class="section-title">Joint-Safe Workout Schedule</div>
       <div class="card" id="workoutCard"></div>
       <button class="btn btn-secondary" onclick="goToResults()" style="width:100%;margin-top:.5rem">← Back to Results</button>
       <button class="btn btn-primary" onclick="restart()" style="margin-top:.7rem">Start Fresh ↺</button>
@@ -356,21 +424,27 @@
       <div class="card-title"><div class="icon" style="background:rgba(110,231,183,.12);color:var(--accent)">➕</div>Log a Workout</div>
       <div class="tracker-form">
         <div class="form-group"><label>Date</label><input type="text" id="logDate" readonly style="cursor:default;color:var(--subtle)"></div>
-        <div class="form-group"><label>Duration (min)</label><input type="number" id="logDur" placeholder="45" min="1"></div>
+        <div class="form-group"><label>Duration (5–240 min)</label><input type="number" id="logDur" placeholder="45" min="5" max="240"></div>
         <div class="form-group full"><label>Workout Type</label>
           <div class="wtype-grid" id="wtypeGrid">
-            <button class="wtype-btn" onclick="selType(this,'Strength')"><span class="wt-icon">🏋️</span>Strength</button>
-            <button class="wtype-btn" onclick="selType(this,'Cardio')"><span class="wt-icon">🏃</span>Cardio</button>
-            <button class="wtype-btn" onclick="selType(this,'HIIT')"><span class="wt-icon">⚡</span>HIIT</button>
-            <button class="wtype-btn" onclick="selType(this,'Yoga')"><span class="wt-icon">🧘</span>Yoga</button>
-            <button class="wtype-btn" onclick="selType(this,'Cycling')"><span class="wt-icon">🚴</span>Cycling</button>
-            <button class="wtype-btn" onclick="selType(this,'Swimming')"><span class="wt-icon">🏊</span>Swimming</button>
-            <button class="wtype-btn" onclick="selType(this,'Walk')"><span class="wt-icon">🚶</span>Walk</button>
-            <button class="wtype-btn" onclick="selType(this,'Other')"><span class="wt-icon">🎽</span>Other</button>
+            <button class="wtype-btn" onclick="selType(this,'Strength',6)"><span class="wt-icon">🏋️</span>Strength</button>
+            <button class="wtype-btn" onclick="selType(this,'Cardio',7)"><span class="wt-icon">🏃</span>Cardio</button>
+            <button class="wtype-btn" onclick="selType(this,'HIIT',8.5)"><span class="wt-icon">⚡</span>HIIT</button>
+            <button class="wtype-btn" onclick="selType(this,'Yoga',3)"><span class="wt-icon">🧘</span>Yoga</button>
+            <button class="wtype-btn" onclick="selType(this,'Cycling',6.5)"><span class="wt-icon">🚴</span>Cycling</button>
+            <button class="wtype-btn" onclick="selType(this,'Swimming',7)"><span class="wt-icon">🏊</span>Swimming</button>
+            <button class="wtype-btn" onclick="selType(this,'Walk',3.5)"><span class="wt-icon">🚶</span>Walk</button>
+            <button class="wtype-btn" onclick="selType(this,'Low-Impact',4)"><span class="wt-icon">🪑</span>Low-Impact</button>
           </div>
         </div>
-        <div class="form-group"><label>Calories Burned</label><input type="number" id="logCals" placeholder="300" min="0"></div>
-        <div class="form-group"><label>Notes (optional)</label><input type="text" id="logNotes" placeholder="e.g. 5km run, PR bench..."></div>
+        <div class="form-group">
+          <label>Calories Burned (Max 1500)</label>
+          <input type="number" id="logCals" placeholder="300" min="10" max="1500">
+        </div>
+        <div class="form-group" style="justify-content:flex-end;">
+          <button class="btn btn-secondary" onclick="autoEstimateBurn()" style="padding:.65rem;font-size:.8rem;">⚡ Auto-Estimate</button>
+        </div>
+        <div class="form-group full"><label>Notes (optional)</label><input type="text" id="logNotes" placeholder="e.g. 5km run, PR bench..."></div>
       </div>
       <button class="btn btn-primary" onclick="logWorkout()">+ Log Workout</button>
     </div>
@@ -447,37 +521,24 @@
 
   <!-- ===== DIET PAGE ===== -->
   <div class="page" id="page-diet">
-
-    <!-- Pref toggle -->
     <div class="card" style="margin-bottom:1.25rem">
       <div class="card-title"><div class="icon" style="background:rgba(110,231,183,.12);color:var(--accent)">🍽️</div>Your Personalised Diet Plan</div>
       <div style="display:flex;gap:.5rem;margin-bottom:1.2rem">
-        <button class="diet-toggle-btn active" id="dtVeg"   onclick="setDietView('veg')">🥦 Vegetarian</button>
-        <button class="diet-toggle-btn"        id="dtNonveg" onclick="setDietView('nonveg')">🍗 Non-Vegetarian</button>
+        <button class="diet-toggle-btn active" id="dtVeg" onclick="setDietView('veg')">🥦 Vegetarian</button>
+        <button class="diet-toggle-btn" id="dtNonveg" onclick="setDietView('nonveg')">🍗 Non-Vegetarian</button>
       </div>
       <p style="font-size:.8rem;color:var(--subtle);line-height:1.6" id="dietIntroText">Loading your nutrient targets...</p>
     </div>
-
-    <!-- Nutrient targets -->
     <div class="section-title">Your Daily Nutrient Targets</div>
     <div class="card" id="nutrientTargetCard"></div>
-
-    <!-- Macro breakdown visual -->
     <div class="section-title">Macro Breakdown</div>
     <div class="card" id="macroBreakdownCard"></div>
-
-    <!-- Micronutrients -->
     <div class="section-title">Key Micronutrients to Watch</div>
     <div class="card" id="microCard"></div>
-
-    <!-- Meal plan -->
     <div class="section-title" id="mealPlanTitle">Meal Plan</div>
     <div id="mealPlanContainer"></div>
-
-    <!-- Foods to avoid -->
     <div class="section-title">Foods to Limit / Avoid</div>
     <div class="card" id="avoidCard"></div>
-
     <p style="font-size:.73rem;color:var(--muted);text-align:center;margin-top:1rem;line-height:1.6">
       ⚠️ These targets are calculated from your BMI & goal. Always consult a registered dietitian for medical nutrition advice.
     </p>
@@ -485,8 +546,6 @@
 
   <!-- ===== AI COACH PAGE ===== -->
   <div class="page" id="page-ai">
-
-    <!-- Header card -->
     <div class="ai-hero-card">
       <div style="display:flex;align-items:center;gap:.8rem;margin-bottom:.6rem">
         <div class="ai-avatar">🤖</div>
@@ -499,20 +558,6 @@
       <p style="font-size:.8rem;color:var(--subtle);line-height:1.6">Ask me anything about fitness, nutrition, health conditions (diabetes, high BP, PCOS, thyroid…), supplements, recovery, mental wellness, or your personal FitPath data. I'm aware of your profile.</p>
     </div>
 
-    <!-- API key bar — Groq (free) -->
-    <div id="aiKeyBar" style="display:none;flex-direction:column;gap:.6rem;background:rgba(129,140,248,.07);border:1px solid rgba(129,140,248,.25);border-radius:13px;padding:.9rem 1rem;margin-bottom:1.25rem;">
-      <div style="display:flex;align-items:center;gap:.6rem;flex-wrap:wrap">
-        <span style="font-size:.82rem;color:var(--accent2);font-weight:700;flex-shrink:0">🔑 Free Groq API Key</span>
-        <input type="password" id="aiKeyInput" placeholder="sk-or-..." style="flex:1;min-width:160px;background:var(--surface);border:1.5px solid var(--border);border-radius:9px;color:var(--text);font-family:'Cabinet Grotesk',sans-serif;font-size:.82rem;padding:.5rem .75rem;outline:none;">
-        <button onclick="saveApiKey()" style="background:var(--accent2);color:#fff;border:none;border-radius:9px;font-family:'Cabinet Grotesk',sans-serif;font-size:.8rem;font-weight:700;padding:.5rem 1rem;cursor:pointer;flex-shrink:0;">Save Key</button>
-      </div>
-      <div id="aiKeyStatus" style="font-size:.75rem;color:var(--muted)">
-        👉 Get your <strong style="color:var(--accent2)">free</strong> key at <strong>openrouter.ai</strong> — Sign up → API Keys → Create Key. No credit card needed!
-      </div>
-    </div>
-
-    <!-- Quick topic tags -->
-<!-- Quick topic tags -->
     <div class="section-title">Quick Topics</div>
     <div class="ai-quick-tags" id="aiQuickTags">
       <button class="ai-tag" onclick="quickAsk('I have high blood pressure. What exercises and foods are safe for me?')">❤️ High BP</button>
@@ -527,7 +572,6 @@
       <button class="ai-tag" onclick="quickAsk('How do I stay motivated and consistent with my fitness routine?')">🧠 Motivation</button>
     </div>
 
-    <!-- Chat window -->
     <div class="section-title">Chat</div>
     <div class="ai-chat-window" id="aiChatWindow">
       <div class="ai-msg ai-msg-bot">
@@ -547,13 +591,11 @@
       </div>
     </div>
 
-    <!-- Typing indicator (hidden by default) -->
     <div class="ai-typing" id="aiTyping" style="display:none">
       <div class="ai-msg-avatar" style="font-size:.95rem">🤖</div>
       <div class="ai-typing-dots"><span></span><span></span><span></span></div>
     </div>
 
-    <!-- Input area -->
     <div class="ai-input-row">
       <textarea class="ai-input" id="aiInput" placeholder="Ask your health question…" rows="1"
         onkeydown="if(event.key==='Enter'&&!event.shiftKey){event.preventDefault();sendAI();}"
@@ -575,18 +617,16 @@
         <button class="tip-refresh" onclick="nextTip()">Next tip →</button>
       </div>
     </div>
-
     <div class="section-title">Browse by Category</div>
     <div class="cat-btns" id="catBtns"></div>
     <div id="catTips"></div>
-
     <div class="section-title">Today's Habit Checklist</div>
     <div class="card" id="habitCard"></div>
   </div>
 </div>
 
 <script>
-// ── SIMPLE STORAGE (localStorage, works everywhere) ─────
+// ── STORAGE ────────────────────────────────────────────────
 const FitStorage = {
   get(key) {
     try { const v = localStorage.getItem(key); return Promise.resolve(v ? JSON.parse(v) : null); }
@@ -603,25 +643,38 @@ const FitStorage = {
   init() { return Promise.resolve(); }
 };
 
-// ── STATE ──────────────────────────────────────────────
+// ── STATE ──────────────────────────────────────────────────
 let unit = 'metric';
 let selWorkoutType = '';
+let selWorkoutMET = 5.0;
 let calDate = new Date();
 let tipIdx = 0;
 let activeCat = 'all';
+let activeDietView = 'veg';
+let recommendedTimelineWeeks = 12;
 
 let userData = {};
 let workouts = [];
 
 try { userData = JSON.parse(localStorage.getItem('fp_ud') || '{}'); } catch(e){}
 try { workouts = JSON.parse(localStorage.getItem('fp_wo') || '[]'); } catch(e){}
+try { const th = localStorage.getItem('fp_theme'); if(th) changeTheme(th, false); } catch(e){}
 
 function save() {
   localStorage.setItem('fp_ud', JSON.stringify(userData));
   localStorage.setItem('fp_wo', JSON.stringify(workouts));
 }
 
-// ── PAGE SWITCHING ──────────────────────────────────────
+// ── THEME ENGINE ───────────────────────────────────────────
+function changeTheme(name, store=true) {
+  if (name === 'cyber') document.documentElement.removeAttribute('data-theme');
+  else document.documentElement.setAttribute('data-theme', name);
+  const sel = document.getElementById('themeSelect');
+  if (sel) sel.value = name;
+  if (store) localStorage.setItem('fp_theme', name);
+}
+
+// ── PAGE NAVIGATION ────────────────────────────────────────
 function switchPage(name) {
   document.querySelectorAll('.page').forEach(p => p.classList.remove('active'));
   document.querySelectorAll('.nav-tab').forEach(t => t.classList.remove('active'));
@@ -651,432 +704,652 @@ function switchScreen(n) {
   window.scrollTo({top:0,behavior:'smooth'});
 }
 
-// ── BMI ─────────────────────────────────────────────────
+// ── UNIT TOGGLING (DUAL IMPERIAL INPUT) ────────────────────
 function setUnit(u, e) {
   unit = u;
   document.querySelectorAll('.unit-btn').forEach(b => b.classList.remove('active'));
   e.target.classList.add('active');
+
+  const wLabel = document.getElementById('lbl-weight');
+  const hLabel = document.getElementById('lbl-height');
+  const wInput = document.getElementById('weight');
+  const hMetricWrap = document.getElementById('hMetricWrap');
+  const hImpWrap = document.getElementById('hImpWrap');
+
   if (u === 'metric') {
-    document.querySelector('#wG label').textContent = 'Weight (kg)';
-    document.getElementById('weight').placeholder = '70';
-    document.querySelector('#hG label').textContent = 'Height (cm)';
-    document.getElementById('height').placeholder = '170';
+    wLabel.textContent = 'Weight (15–250 kg)';
+    hLabel.textContent = 'Height (60–230 cm)';
+    wInput.placeholder = '70';
+    wInput.min = '15';
+    wInput.max = '250';
+    hMetricWrap.style.display = 'block';
+    hImpWrap.style.display = 'none';
   } else {
-    document.querySelector('#wG label').textContent = 'Weight (lbs)';
-    document.getElementById('weight').placeholder = '154';
-    document.querySelector('#hG label').textContent = 'Height (inches)';
-    document.getElementById('height').placeholder = '67';
+    wLabel.textContent = 'Weight (33–550 lbs)';
+    hLabel.textContent = 'Height (Feet & Inches: 2\'0" - 7\'6")';
+    wInput.placeholder = '154';
+    wInput.min = '33';
+    wInput.max = '550';
+    hMetricWrap.style.display = 'none';
+    hImpWrap.style.display = 'grid';
+  }
+  evaluateFeasibility();
+}
+
+function getParsedInputs() {
+  const age = parseFloat(document.getElementById('age').value);
+  const sex = document.getElementById('sex').value;
+  const rawW = parseFloat(document.getElementById('weight').value);
+  let rawH = 0;
+
+  if (unit === 'metric') {
+    rawH = parseFloat(document.getElementById('height').value);
+  } else {
+    const ft = parseFloat(document.getElementById('heightFt').value) || 0;
+    const inc = parseFloat(document.getElementById('heightIn').value) || 0;
+    rawH = (ft * 12) + inc;
+  }
+  return { age, sex, rawW, rawH };
+}
+
+// ── DYNAMIC FEASIBILITY EVALUATOR ─────────────────────────
+function evaluateFeasibility() {
+  const { rawW, rawH } = getParsedInputs();
+  const goal = document.getElementById('goal').value;
+  const chosenWeeks = parseInt(document.getElementById('timeline').value);
+  const box = document.getElementById('feasibilityBox');
+  const msg = document.getElementById('feasibilityMsg');
+
+  if (!rawW || !rawH) { box.classList.remove('show'); return; }
+
+  let wKg = unit === 'imperial' ? rawW * 0.453592 : rawW;
+  let hCm = unit === 'imperial' ? rawH * 2.54 : rawH;
+  let hM = hCm / 100;
+  let ibw = 22 * (hM * hM);
+  let delta = Math.abs(wKg - ibw);
+
+  if (goal === 'maintain' || delta < 1.5) {
+    recommendedTimelineWeeks = chosenWeeks;
+    box.className = 'feasibility-box show optimal';
+    msg.textContent = '🟢 Selected timeline is physiologically optimal for maintenance / recomposition.';
+    document.getElementById('feasibilityFixBtn').style.display = 'none';
+    return;
+  }
+
+  // Safe sustainable rates: fat loss 0.5-0.75 kg/week, gain 0.25-0.4 kg/week
+  let minSafeWeeks = goal === 'lose' ? Math.ceil(delta / 0.75) : Math.ceil(delta / 0.4);
+  recommendedTimelineWeeks = Math.max(minSafeWeeks, 4);
+
+  if (chosenWeeks < recommendedTimelineWeeks) {
+    box.className = 'feasibility-box show unrealistic';
+    msg.innerHTML = `⚠️ <strong>Unrealistic:</strong> Safe physiological progress for this target requires at least <strong>${recommendedTimelineWeeks} weeks</strong>.`;
+    document.getElementById('feasibilityFixBtn').style.display = 'inline-block';
+  } else {
+    box.className = 'feasibility-box show optimal';
+    msg.textContent = `🟢 Selected ${chosenWeeks}-week duration aligns safely with biological rates of adaptation.`;
+    document.getElementById('feasibilityFixBtn').style.display = 'none';
   }
 }
 
+function autoFixTimeline() {
+  const tlSelect = document.getElementById('timeline');
+  let matched = false;
+  for (let opt of tlSelect.options) {
+    if (parseInt(opt.value) >= recommendedTimelineWeeks) {
+      tlSelect.value = opt.value;
+      matched = true;
+      break;
+    }
+  }
+  if (!matched) tlSelect.value = "52";
+  evaluateFeasibility();
+}
+
+// ── BMI & NUTRITIONAL MATH ────────────────────────────────
 function calculate() {
-  const age = parseFloat(document.getElementById('age').value);
-  const sex = document.getElementById('sex').value;
-  let w = parseFloat(document.getElementById('weight').value);
-  let h = parseFloat(document.getElementById('height').value);
+  const { age, sex, rawW, rawH } = getParsedInputs();
   const act = parseFloat(document.getElementById('activity').value);
   const goal = document.getElementById('goal').value;
   const tl = parseInt(document.getElementById('timeline').value);
-  if (!age||!sex||!w||!h) { alert('Please fill in all fields!'); return; }
-  if (unit==='imperial') { w*=0.453592; h*=2.54; }
-  const hM = h/100;
-  const bmi = w/(hM*hM);
-  const bmr = sex==='male' ? 10*w+6.25*h-5*age+5 : 10*w+6.25*h-5*age-161;
-  const tdee = Math.round(bmr*act);
-  const ideal = Math.round(22*hM*hM);
-  const gap = Math.round((w-ideal)*10)/10;
-  const calT = goal==='lose'?tdee-500:goal==='gain'?tdee+300:tdee;
+
+  if (!age || !sex || !rawW || !rawH) { alert('Please fill in all profile fields!'); return; }
+
+  // Biological human constraints
+  if (age < 5 || age > 100) { alert('Please enter a realistic human age between 5 and 100 years.'); return; }
+
+  const minW = unit === 'metric' ? 15 : 33;
+  const maxW = unit === 'metric' ? 250 : 550;
+  if (rawW < minW || rawW > maxW) {
+    alert(`Please enter a realistic ambulatory weight between ${minW} and ${maxW} ${unit==='metric'?'kg':'lbs'}.`);
+    return;
+  }
+
+  const minH = unit === 'metric' ? 60 : 24;
+  const maxH = unit === 'metric' ? 230 : 90;
+  if (rawH < minH || rawH > maxH) {
+    alert(`Please enter a realistic height between ${minH} and ${maxH} ${unit==='metric'?'cm':'inches (2\'0" - 7\'6")'}.`);
+    return;
+  }
+
+  let w = rawW;
+  let h = rawH;
+  if (unit === 'imperial') {
+    w *= 0.453592;
+    h *= 2.54;
+  }
+
+  const hM = h / 100;
+  // Oxford formula for non-standard statures
+  const bmi = 1.3 * (w / Math.pow(hM, 2.5));
+  const ibw = Math.round(22 * (hM * hM));
+
+  // Adjusted Body Weight for individuals with higher weight
+  let adjustedWeight = w;
+  if (w > ibw * 1.2) {
+    adjustedWeight = ibw + 0.4 * (w - ibw);
+  }
+
+  // BMR & Safe Caloric Floor
+  const bmr = sex === 'male'
+    ? (10 * adjustedWeight + 6.25 * h - 5 * age + 5)
+    : (10 * adjustedWeight + 6.25 * h - 5 * age - 161);
+  const tdee = Math.round(bmr * act);
+  const safeFloor = sex === 'male' ? 1500 : 1200;
+  const calT = goal === 'lose' ? Math.max(tdee - 500, safeFloor) : goal === 'gain' ? tdee + 350 : tdee;
+
+  const gap = Math.round((w - ibw) * 10) / 10;
   const dietPref = document.getElementById('dietPref').value;
-  userData = {age,sex,w,h,hM,bmi,bmr,tdee,ideal,gap,act,goal,tl,calT,dietPref};
+
+  userData = { age, sex, w, h, hM, bmi, ibw, adjustedWeight, tdee, calT, goal, tl, dietPref, gap, act };
   save();
   renderBMI();
   switchScreen(2);
 }
 
 function renderBMI() {
-  const {bmi,ideal,gap,tdee,calT,goal,w} = userData;
+  const { bmi, ibw, gap, tdee, calT, goal, adjustedWeight } = userData;
   document.getElementById('bmiNum').textContent = bmi.toFixed(1);
-  let cat,col,emo;
-  if(bmi<18.5){cat='Underweight';col='#60a5fa';emo='⬇️';}
-  else if(bmi<25){cat='Normal Weight';col='#6ee7b7';emo='✅';}
-  else if(bmi<30){cat='Overweight';col='#fbbf24';emo='⚠️';}
-  else{cat='Obese';col='#f87171';emo='🔴';}
-  document.getElementById('bmiLabel').innerHTML=`<span style="color:${col}">${emo} ${cat}</span>`;
-  const pct = Math.min(Math.max((bmi-15)/25,0),1)*100;
-  setTimeout(()=>document.getElementById('bmiMarker').style.left=pct+'%',100);
-  document.getElementById('bmiIdeal').textContent=ideal+' kg';
-  document.getElementById('bmiGap').textContent=(gap>0?'+':'')+gap+'kg';
-  document.getElementById('bmiTDEE').textContent=tdee;
-  document.getElementById('recGrid').innerHTML=getRecs().map(r=>
+  let cat, col, emo;
+  if (bmi < 18.5) { cat = 'Underweight'; col = '#60a5fa'; emo = '⬇️'; }
+  else if (bmi < 25) { cat = 'Normal Weight'; col = '#6ee7b7'; emo = '✅'; }
+  else if (bmi < 30) { cat = 'Overweight'; col = '#fbbf24'; emo = '⚠️'; }
+  else { cat = 'Elevated (Class II/III)'; col = '#f87171'; emo = '🔴'; }
+
+  document.getElementById('bmiLabel').innerHTML = `<span style="color:${col}">${emo} ${cat}</span>`;
+  const pct = Math.min(Math.max((bmi - 14) / 26, 0), 1) * 100;
+  setTimeout(() => document.getElementById('bmiMarker').style.left = pct + '%', 100);
+
+  document.getElementById('bmiIdeal').textContent = ibw + ' kg';
+  document.getElementById('bmiGap').textContent = (gap > 0 ? '+' : '') + gap + 'kg';
+  document.getElementById('bmiTDEE').textContent = calT;
+
+  document.getElementById('recGrid').innerHTML = getRecs().map(r =>
     `<div class="rec-card"><div class="rec-icon">${r.i}</div><div class="rec-title">${r.t}</div><div class="rec-body">${r.b}</div></div>`
   ).join('');
-  const pro=Math.round(w*(goal==='gain'?2.2:1.8));
-  const fat=Math.round(calT*0.28/9);
-  const carbs=Math.round((calT-pro*4-fat*9)/4);
-  document.getElementById('nutritionCard').innerHTML=`
-    <div class="calorie-label"><span>Daily Calories</span><span style="font-weight:600;color:var(--accent2)">${calT} kcal</span></div>
+
+  // Capped protein to prevent unpalatable or unsafe extremes (60g - 180g)
+  let proMultiplier = goal === 'gain' ? 1.8 : goal === 'lose' ? 1.6 : 1.2;
+  const pro = Math.min(Math.max(Math.round(adjustedWeight * proMultiplier), 60), 180);
+  const fat = Math.round((calT * 0.28) / 9);
+  const carbs = Math.round((calT - (pro * 4) - (fat * 9)) / 4);
+
+  // Safe capped hydration (1.5L to 3.5L)
+  const safeWater = Math.min(Math.max(Math.round(adjustedWeight * 0.033 * 10) / 10, 1.5), 3.5);
+
+  document.getElementById('nutritionCard').innerHTML = `
+    <div class="calorie-label"><span>Daily Calorie Budget</span><span style="font-weight:600;color:var(--accent2)">${calT} kcal</span></div>
     <div class="calorie-bar"><div class="calorie-fill" style="width:80%;background:var(--accent2)"></div></div>
     <div class="stats-row" style="margin-top:.9rem">
-      <div class="stat-box"><div class="stat-value" style="color:var(--accent)">${pro}g</div><div class="stat-label">Protein</div></div>
+      <div class="stat-box"><div class="stat-value" style="color:var(--accent)">${pro}g</div><div class="stat-label">Protein (Safe Cap)</div></div>
       <div class="stat-box"><div class="stat-value" style="color:var(--warn)">${carbs}g</div><div class="stat-label">Carbs</div></div>
       <div class="stat-box"><div class="stat-value" style="color:var(--accent3)">${fat}g</div><div class="stat-label">Fats</div></div>
     </div>
-    <p style="font-size:.75rem;color:var(--muted);margin-top:.85rem">💧 Drink ${Math.round(w*0.033*10)/10}L water daily · 🥗 Eat 4–5 meals/day</p>`;
+    <p style="font-size:.75rem;color:var(--muted);margin-top:.85rem">💧 Baseline Hydration: <strong>${safeWater} L/day</strong> · Adjusted for lean mass & metabolic safety</p>`;
+}
+
+function getAgeGroup(age) {
+  if (age <= 12) return 'child';
+  if (age <= 17) return 'teen';
+  if (age <= 59) return 'adult';
+  if (age <= 74) return 'senior';
+  return 'elder';
 }
 
 function getRecs() {
-  const {bmi,goal}=userData;
-  if(goal==='lose'||bmi>=25) return [
-    {i:'🏃',t:'Cardio Focus',b:'30–45 min moderate cardio 5x/week. Walking, cycling, or swimming are excellent.'},
-    {i:'🥗',t:'Caloric Deficit',b:'Eat 400–600 cal below TDEE. Focus on whole foods, lean protein, and veggies.'},
-    {i:'💪',t:'Strength Training',b:'2–3 resistance sessions/week to preserve muscle while losing fat.'},
-    {i:'😴',t:'Sleep & Recovery',b:'7–9 hours of quality sleep. Poor sleep elevates cortisol and stores fat.'},
+  const { bmi, goal, age } = userData;
+  const ag = getAgeGroup(age);
+
+  if (bmi >= 30) {
+    return [
+      { i:'🪑', t:'Low-Impact Movement', b:'Protect joint cartilage: emphasize swimming, recumbent cycling, and seated resistance bands.' },
+      { i:'🚶', t:'NEAT Progression', b:'Build steady step volume (5,000–7,000 steps) before adding intense running or plyometric jumps.' },
+      { i:'🛡️', t:'Caloric Floor Safety', b:'Never crash-diet below essential organ minimums. Moderate deficits preserve vital lean tissue.' },
+      { i:'🩺', t:'Clinical Monitoring', b:'Keep blood pressure and joint health coordinated with your physician during progression.' }
+    ];
+  }
+
+  if (ag === 'child') return [
+    { i:'🏃', t:'Active Play', b:'60+ min of fun movement daily — running, tag, playground games. Keep it playful and engaging!' },
+    { i:'🤸', t:'Body-Weight Fun', b:'Cartwheels, animal crawls, and balance games build functional strength safely.' },
+    { i:'🏊', t:'Swimming & Sports', b:'Team sports and swimming build coordination and cardiovascular capacity safely.' },
+    { i:'🥛', t:'Growth Nutrition', b:'Never restrict growth: focus on calcium, fresh fruits, vegetables, and wholesome dairy.' }
   ];
-  if(goal==='gain'||bmi<18.5) return [
-    {i:'🏋️',t:'Progressive Overload',b:'Lift heavy 4x/week. Increase weight/reps weekly. Focus on compounds.'},
-    {i:'🍗',t:'High Protein',b:'Eat 2–2.4g protein per kg bodyweight. Include eggs, chicken, legumes.'},
-    {i:'🍌',t:'Caloric Surplus',b:'Eat 250–400 cal above TDEE. Prioritize calorie-dense, nutrient-rich foods.'},
-    {i:'📅',t:'Consistency',b:'Muscle growth takes months. Stay consistent with training and eating.'},
+  if (ag === 'teen') return [
+    { i:'⚽', t:'Sports & Conditioning', b:'Join sports or complete 45 min of cardio. Excellent for physical and social development.' },
+    { i:'🤸', t:'Calisthenic Foundations', b:'Master push-ups, pull-ups, and bodyweight squats before attempting maximal external loads.' },
+    { i:'🍗', t:'Growth Fuel', b:'Ensure sufficient protein and carbohydrates. Don\'t skip meals while your body develops.' },
+    { i:'😴', t:'8–10h Sleep', b:'Essential for human growth hormone release, athletic recovery, and cognitive performance.' }
+  ];
+  if (ag === 'senior' || ag === 'elder') return [
+    { i:'🚶', t:'Low-Impact Cardio', b:'Brisk walking, water aerobics, or cycling 30–40 min, 5x/week. Gentle on joint spaces.' },
+    { i:'🪑', t:'Resistance Bands', b:'Seated exercises and band pulls build bone density without acute compressive strain.' },
+    { i:'🧘', t:'Balance Training', b:'Single-leg stands and gentle stability drills reduce fall risk and improve mobility.' },
+    { i:'🥗', t:'Thermic Protein', b:'Distribute protein across all meals to prevent age-related sarcopenia.' }
+  ];
+
+  if (goal === 'lose') return [
+    { i:'🏃', t:'Cardio & Steps', b:'30–45 min moderate cardio + daily steps for sustainable energy expenditure.' },
+    { i:'🥗', t:'Moderate Deficit', b:'Maintain a steady 400–500 kcal deficit. Focus on whole foods and high satiety index items.' },
+    { i:'💪', t:'Strength Preservation', b:'Lift weights 2–3x/week to preserve metabolically active muscle during weight loss.' },
+    { i:'😴', t:'Restorative Sleep', b:'7–9 hours of sleep. Poor sleep elevates cortisol and ghrelin, triggering intense cravings.' }
+  ];
+  if (goal === 'gain') return [
+    { i:'🏋️', t:'Progressive Overload', b:'Focus on compounds (squats, presses, rows). Add small load or rep progressions weekly.' },
+    { i:'🍗', t:'Targeted Protein', b:'Distribute your safe protein cap across 4 daily meals to maximize muscle protein synthesis.' },
+    { i:'🍌', t:'Slight Surplus', b:'Eat 250–350 kcal above maintenance to fuel hypertrophy without excessive fat gain.' },
+    { i:'📅', t:'Patience & Log', b:'Natural muscle accrues at 0.25–0.5 kg/month. Log your training lifts consistently.' }
   ];
   return [
-    {i:'⚖️',t:'Maintain Balance',b:'Eat at maintenance calories. Focus on food quality and micronutrients.'},
-    {i:'🏃',t:'Stay Active',b:'150 min moderate cardio per week. Mix activities you enjoy.'},
-    {i:'💪',t:'Build Strength',b:'Resistance training 2–3x/week for body composition and longevity.'},
-    {i:'🧘',t:'Stress Management',b:'Mindfulness or yoga to keep cortisol in check and mood elevated.'},
+    { i:'⚖️', t:'Metabolic Homeostasis', b:'Eat at maintenance calories with 80% whole nutrient-dense foods.' },
+    { i:'🏃', t:'Active Lifestyle', b:'Target 150 minutes of moderate cardiovascular movement each week.' },
+    { i:'💪', t:'Functional Strength', b:'Resistance train 2–3x/week for posture, joint stability, and longevity.' },
+    { i:'🧘', t:'Stress Mitigation', b:'Practice breathwork or walking outdoors to keep chronic cortisol under control.' }
   ];
 }
 
+// ── ACTION PLAN WITH RESET / DELOAD WEEKS ──────────────────
 function showPlan() {
-  const {tl,goal,gap}=userData;
-  document.getElementById('planWeeks').textContent=`${tl}-Week`;
-  document.getElementById('planList').innerHTML=getPlanItems().map(p=>
+  const { tl, goal, bmi } = userData;
+  document.getElementById('planWeeks').textContent = `${tl}-Week`;
+
+  document.getElementById('planList').innerHTML = getPlanItems().map(p =>
     `<li class="plan-item"><div class="check">✓</div><div><strong>${p.t}</strong> — ${p.d}</div></li>`
   ).join('');
-  const ms=getMilestones();
-  document.getElementById('milestones').innerHTML=ms.map((m,i)=>
-    `<div class="timeline-item"><div class="timeline-dot ${i===0?'active':''}">${m.i}</div><div class="timeline-content"><div class="timeline-week">${m.w}</div><div class="timeline-text">${m.t}</div></div></div>`
-  ).join('');
-  document.getElementById('workoutCard').innerHTML=getWOSched();
+
+  let ms = [];
+  const breakInterval = 8;
+  for (let w = 1; w <= tl; w++) {
+    if (w === 1) {
+      ms.push({ w: 'Week 1', i: '🚀', t: 'Routine integration: Establish baseline steps, form mechanics, and sleep consistency.' });
+    } else if (w % breakInterval === 0 && w !== tl) {
+      ms.push({ w: `Week ${w}`, i: '☕', t: 'Metabolic Reset Week: Eat at maintenance calories, reduce workout volume by 40% to prevent fatigue adaptation.', isBreak: true });
+    } else if (w === Math.round(tl / 2)) {
+      ms.push({ w: `Week ${w}`, i: '⚡', t: goal === 'maintain' ? 'Habit consolidation.' : 'Midway reassessment: Body recomposition adaptation. Safe progressive overload check.' });
+    } else if (w === tl) {
+      ms.push({ w: `Week ${tl}`, i: '🏆', t: 'Goal achieved! Lock in your new baseline and transition smoothly to sustainable maintenance.' });
+    }
+  }
+
+  document.getElementById('milestones').innerHTML = ms.map(m => `
+    <div class="timeline-item">
+      <div class="timeline-dot ${m.isBreak ? 'break' : ''}">${m.i}</div>
+      <div class="timeline-content">
+        <div class="timeline-week">${m.w}</div>
+        <div class="timeline-text">${m.t}</div>
+      </div>
+    </div>
+  `).join('');
+
+  document.getElementById('workoutCard').innerHTML = getWOSched();
   switchScreen(3);
 }
 
 function getPlanItems() {
-  const {goal}=userData;
-  if(goal==='lose') return [
-    {t:'Track Calories',d:'Log every meal. Stay within your daily target.'},
-    {t:'Daily Movement',d:'Hit 8,000–10,000 steps every day as a baseline.'},
-    {t:'Weekly Weigh-in',d:'Weigh yourself every Monday morning after waking.'},
-    {t:'Meal Prep Sundays',d:'Prepare lunches for the week to avoid unhealthy choices.'},
-    {t:'Hydrate First',d:'Drink a full glass of water before each meal.'},
-    {t:'Limit Alcohol',d:'Alcohol is calorically dense and sabotages fat loss.'},
+  const { goal, bmi } = userData;
+  if (bmi >= 30) {
+    return [
+      { t:'Low-Impact Cardio Focus', d:'Use recumbent bikes, ellipticals, or swimming laps to eliminate knee impact.' },
+      { t:'NEAT Step Targets', d:'Accumulate 5,000–7,000 steps daily on flat, forgiving surfaces.' },
+      { t:'Hydrate Adequately', d:'Drink water consistently throughout the day to support blood volume and joints.' },
+      { t:'Respect Caloric Floors', d:'Never drop below essential organ safety floors (1,200/1,500 kcal).' },
+      { t:'Scheduled Reset Weeks', d:'Honor the planned maintenance breaks every 8 weeks to prevent metabolic slowdown.' }
+    ];
+  }
+  if (goal === 'lose') return [
+    { t:'Consistent Tracking', d:'Log your nutrition accurately to stay within your daily calibrated budget.' },
+    { t:'Daily NEAT Baseline', d:'Hit 8,000–10,000 steps daily as your primary energy expenditure tool.' },
+    { t:'Strength Retention', d:'Lift 2–3 times a week to preserve metabolically active lean muscle.' },
+    { t:'Hydrate Before Meals', d:'Drink a full glass of water 15 minutes before dining for satiety signaling.' },
+    { t:'Deload Respect', d:'Use designated reset weeks to drop systemic inflammation and diet fatigue.' }
   ];
-  if(goal==='gain') return [
-    {t:'Follow a Program',d:'Stick to a structured plan — Starting Strength, GZCLP, or PPL.'},
-    {t:'Eat Every 3–4 Hours',d:'Never skip meals. Keep protein consistent all day.'},
-    {t:'Post-Workout Nutrition',d:'Protein + carbs within 45 min of lifting.'},
-    {t:'Track Your Lifts',d:'Log every session. Progressive overload drives muscle growth.'},
-    {t:'Prioritize Sleep',d:'Most muscle repair happens during deep sleep. Target 8 hours.'},
-    {t:'Limit Cardio',d:'Keep cardio to 2x/week max to avoid burning excess calories.'},
+  if (goal === 'gain') return [
+    { t:'Progressive Tracking', d:'Log your weights and reps each session to ensure measurable overload.' },
+    { t:'Protein Distribution', d:'Divide your protein targets across 4 balanced meals every 3–4 hours.' },
+    { t:'Controlled Surplus', d:'Maintain a modest 300 kcal surplus to avoid unwanted adiposity.' },
+    { t:'Prioritize Rest', d:'Muscle protein synthesis and tissue repair occur during deep stages of sleep.' }
   ];
   return [
-    {t:'Balanced Eating',d:'80/20 rule — eat clean 80%, flexibility 20%.'},
-    {t:'Mix Training Styles',d:'Combine cardio and strength for optimal body composition.'},
-    {t:'Stress Management',d:'Daily relaxation habit — walk, meditate, or journal.'},
-    {t:'Annual Checkup',d:'Get blood work done to monitor key health markers.'},
-    {t:'Consistent Schedule',d:'Work out at the same time daily to build lasting habits.'},
-  ];
-}
-
-function getMilestones() {
-  const {tl,goal,gap}=userData;
-  const ws=[1,Math.round(tl/3),Math.round(tl*2/3),tl];
-  const wk=Math.abs(gap||5)/tl;
-  return [
-    {w:'Week 1',i:'🚀',t:'Build your routine. Consistency over perfection.'},
-    {w:`Week ${ws[1]}`,i:'📈',t:goal==='maintain'?'Feeling stronger and more energetic.':`~${(wk*ws[1]).toFixed(1)} kg ${goal==='lose'?'lost':'gained'}. Energy improving.`},
-    {w:`Week ${ws[2]}`,i:'⚡',t:goal==='maintain'?'New habits fully formed.':`~${(wk*ws[2]).toFixed(1)} kg ${goal==='lose'?'lost':'gained'}. Visible changes.`},
-    {w:`Week ${tl}`,i:'🏆',t:'Goal achieved! New BMI target reached. Celebrate! 🎉'},
+    { t:'Balanced 80/20 Eating', d:'80% whole nutrient-dense foods, with 20% flexibility for adherence.' },
+    { t:'Cardio & Strength Mix', d:'Combine resistance training with zone 2 cardio for cardiovascular longevity.' },
+    { t:'Daily Movement Routine', d:'Walk and stay active outside the gym to optimize metabolic markers.' }
   ];
 }
 
 function getWOSched() {
-  const {goal}=userData;
-  const rows = goal==='lose'
-    ? [{d:'Mon',t:'Strength',x:'Upper body (chest, back, shoulders)',c:'var(--accent2)'},{d:'Tue',t:'Cardio',x:'30 min run/cycle',c:'var(--accent)'},{d:'Wed',t:'Strength',x:'Lower body (squats, lunges)',c:'var(--accent2)'},{d:'Thu',t:'Cardio',x:'HIIT — 20 min',c:'var(--accent)'},{d:'Fri',t:'Strength',x:'Full body compound',c:'var(--accent2)'},{d:'Sat',t:'Active Rest',x:'Walk, swim, hike, yoga',c:'var(--warn)'},{d:'Sun',t:'Rest',x:'Full rest & meal prep',c:'var(--muted)'}]
-    : goal==='gain'
-    ? [{d:'Mon',t:'Push',x:'Chest, shoulders, triceps',c:'var(--accent2)'},{d:'Tue',t:'Pull',x:'Back, biceps, rear delts',c:'var(--accent3)'},{d:'Wed',t:'Legs',x:'Squats, RDL, leg press',c:'var(--accent)'},{d:'Thu',t:'Rest',x:'Light walk or full rest',c:'var(--muted)'},{d:'Fri',t:'Push',x:'Volume, higher reps',c:'var(--accent2)'},{d:'Sat',t:'Pull+Legs',x:'Full lower & back session',c:'var(--accent3)'},{d:'Sun',t:'Rest',x:'Full recovery',c:'var(--muted)'}]
-    : [{d:'Mon',t:'Strength',x:'Full body resistance',c:'var(--accent2)'},{d:'Tue',t:'Cardio',x:'30–40 min steady state',c:'var(--accent)'},{d:'Wed',t:'Flex',x:'Yoga or deep stretching',c:'var(--accent3)'},{d:'Thu',t:'Strength',x:'Full body resistance',c:'var(--accent2)'},{d:'Fri',t:'Cardio',x:'HIIT or outdoor activity',c:'var(--accent)'},{d:'Sat',t:'Active',x:'Sport, hiking, swimming',c:'var(--warn)'},{d:'Sun',t:'Rest',x:'Recovery & planning',c:'var(--muted)'}];
-  return `<div style="display:flex;flex-direction:column;gap:.5rem">${rows.map(r=>`<div style="display:flex;align-items:center;gap:.65rem;padding:.6rem .8rem;background:var(--surface);border-radius:10px;border:1px solid var(--border)"><span style="width:28px;font-size:.7rem;font-weight:700;color:var(--muted);flex-shrink:0">${r.d}</span><span style="padding:.15rem .55rem;border-radius:99px;font-size:.68rem;font-weight:600;background:${r.c}20;color:${r.c};flex-shrink:0;min-width:68px;text-align:center">${r.t}</span><span style="font-size:.78rem;color:var(--subtle)">${r.x}</span></div>`).join('')}</div>`;
+  const { bmi, goal } = userData;
+  let rows;
+
+  if (bmi >= 30) {
+    rows = [
+      { d:'Mon', t:'Low-Impact', x:'30 min recumbent cycling + resistance bands', c:'var(--accent)' },
+      { d:'Tue', t:'Mobility', x:'Gentle dynamic stretching & balance work', c:'var(--accent2)' },
+      { d:'Wed', t:'Aquatics', x:'30–40 min water aerobics or swimming laps', c:'var(--accent3)' },
+      { d:'Thu', t:'Active Rest', x:'Casual 3,000–5,000 step walk on flat terrain', c:'var(--warn)' },
+      { d:'Fri', t:'Strength', x:'Seated dumbbell presses, band rows, chair squats', c:'var(--accent2)' },
+      { d:'Sat', t:'Recovery', x:'Full body restorative stretching & hydration', c:'var(--accent)' },
+      { d:'Sun', t:'Rest', x:'Full day of recovery and meal prep', c:'var(--muted)' }
+    ];
+  } else {
+    rows = goal === 'lose'
+      ? [{ d:'Mon', t:'Strength', x:'Upper body compound pressing & pulling', c:'var(--accent2)' },
+         { d:'Tue', t:'Cardio', x:'30–40 min steady state zone 2 cardio', c:'var(--accent)' },
+         { d:'Wed', t:'Strength', x:'Lower body (squats, romanian deadlifts)', c:'var(--accent2)' },
+         { d:'Thu', t:'Cardio', x:'Low-impact HIIT or interval walk — 20 min', c:'var(--accent)' },
+         { d:'Fri', t:'Strength', x:'Full body functional compound session', c:'var(--accent2)' },
+         { d:'Sat', t:'Active Rest', x:'Casual outdoor walk, cycling, or yoga', c:'var(--warn)' },
+         { d:'Sun', t:'Rest', x:'Complete recovery & meal prep', c:'var(--muted)' }]
+      : goal === 'gain'
+      ? [{ d:'Mon', t:'Push', x:'Chest, shoulders, triceps', c:'var(--accent2)' },
+         { d:'Tue', t:'Pull', x:'Back, biceps, rear delts', c:'var(--accent3)' },
+         { d:'Wed', t:'Legs', x:'Squats, romanian deadlifts, leg press', c:'var(--accent)' },
+         { d:'Thu', t:'Rest', x:'Light stroll & restorative mobility', c:'var(--muted)' },
+         { d:'Fri', t:'Push', x:'Upper body volume & hypertrophy focus', c:'var(--accent2)' },
+         { d:'Sat', t:'Pull+Legs', x:'Posterior chain & back session', c:'var(--accent3)' },
+         { d:'Sun', t:'Rest', x:'Full systemic recovery', c:'var(--muted)' }]
+      : [{ d:'Mon', t:'Strength', x:'Full body resistance session', c:'var(--accent2)' },
+         { d:'Tue', t:'Cardio', x:'30–40 min steady state run or cycle', c:'var(--accent)' },
+         { d:'Wed', t:'Mobility', x:'Yoga or deep restorative stretching', c:'var(--accent3)' },
+         { d:'Thu', t:'Strength', x:'Full body functional movement', c:'var(--accent2)' },
+         { d:'Fri', t:'Cardio', x:'Recreational sport or interval cardio', c:'var(--accent)' },
+         { d:'Sat', t:'Active', x:'Hiking, outdoor games, swimming', c:'var(--warn)' },
+         { d:'Sun', t:'Rest', x:'Recovery and week preparation', c:'var(--muted)' }];
+  }
+
+  return `<div style="display:flex;flex-direction:column;gap:.5rem">${rows.map(r => `
+    <div style="display:flex;align-items:center;gap:.65rem;padding:.6rem .8rem;background:var(--surface);border-radius:10px;border:1px solid var(--border)">
+      <span style="width:28px;font-size:.7rem;font-weight:700;color:var(--muted);flex-shrink:0">${r.d}</span>
+      <span style="padding:.15rem .55rem;border-radius:99px;font-size:.68rem;font-weight:600;background:${r.c}20;color:${r.c};flex-shrink:0;min-width:68px;text-align:center">${r.t}</span>
+      <span style="font-size:.78rem;color:var(--subtle)">${r.x}</span>
+    </div>
+  `).join('')}</div>`;
 }
 
-function goBack(){switchScreen(1);}
-function goToResults(){switchScreen(2);}
-function restart(){switchScreen(1);}
+function goBack(){ switchScreen(1); }
+function goToResults(){ switchScreen(2); }
+function restart(){ switchScreen(1); }
 
-// ── TRACKER ──────────────────────────────────────────────
+// ── TRACKER & WORKOUT LOGGING ─────────────────────────────
 function initDate() {
-  const n=new Date();
-  document.getElementById('logDate').value=n.toLocaleDateString('en-GB',{day:'2-digit',month:'short',year:'numeric'});
-  document.getElementById('logDate').dataset.iso=n.toISOString().split('T')[0];
+  const n = new Date();
+  document.getElementById('logDate').value = n.toLocaleDateString('en-GB', { day:'2-digit', month:'short', year:'numeric' });
+  document.getElementById('logDate').dataset.iso = n.toISOString().split('T')[0];
 }
 
-function selType(btn,type) {
-  document.querySelectorAll('.wtype-btn').forEach(b=>b.classList.remove('sel'));
+function selType(btn, type, met=5) {
+  document.querySelectorAll('.wtype-btn').forEach(b => b.classList.remove('sel'));
   btn.classList.add('sel');
-  selWorkoutType=type;
+  selWorkoutType = type;
+  selWorkoutMET = met;
+}
+
+function autoEstimateBurn() {
+  const dur = parseInt(document.getElementById('logDur').value);
+  if (!dur || dur < 5) { alert('Please enter a workout duration first (minimum 5 minutes).'); return; }
+  const w = userData.adjustedWeight || 70;
+  const est = Math.min(Math.round(selWorkoutMET * w * (dur / 60)), 1500);
+  document.getElementById('logCals').value = est;
 }
 
 function logWorkout() {
-  const dur=parseInt(document.getElementById('logDur').value);
-  const cals=parseInt(document.getElementById('logCals').value)||0;
-  const notes=document.getElementById('logNotes').value.trim();
-  const dateIso=document.getElementById('logDate').dataset.iso;
-  const disp=document.getElementById('logDate').value;
-  if(!selWorkoutType){alert('Pick a workout type!');return;}
-  if(!dur||dur<1){alert('Enter a duration!');return;}
-  workouts.unshift({id:Date.now(),date:dateIso,disp,type:selWorkoutType,dur,cals,notes});
+  const dur = parseInt(document.getElementById('logDur').value);
+  const cals = parseInt(document.getElementById('logCals').value) || 0;
+  const notes = document.getElementById('logNotes').value.trim();
+  const dateIso = document.getElementById('logDate').dataset.iso;
+  const disp = document.getElementById('logDate').value;
+
+  if (!selWorkoutType) { alert('Pick a workout type!'); return; }
+  if (!dur || dur < 5 || dur > 240) { alert('Enter a realistic duration between 5 and 240 minutes.'); return; }
+  if (cals < 10 || cals > 1500) { alert('Please enter a realistic session calorie burn (10 to 1,500 kcal).'); return; }
+
+  workouts.unshift({ id: Date.now(), date: dateIso, disp, type: selWorkoutType, dur, cals, notes });
   save();
   renderRecords();
-  document.getElementById('logDur').value='';
-  document.getElementById('logCals').value='';
-  document.getElementById('logNotes').value='';
-  document.querySelectorAll('.wtype-btn').forEach(b=>b.classList.remove('sel'));
-  selWorkoutType='';
+  document.getElementById('logDur').value = '';
+  document.getElementById('logCals').value = '';
+  document.getElementById('logNotes').value = '';
+  document.querySelectorAll('.wtype-btn').forEach(b => b.classList.remove('sel'));
+  selWorkoutType = '';
 }
 
 function delWO(id) {
-  workouts=workouts.filter(w=>w.id!==id);
+  workouts = workouts.filter(w => w.id !== id);
   save();
   renderRecords();
-  if(document.getElementById('page-calendar').classList.contains('active')) renderCalendar();
+  if (document.getElementById('page-calendar').classList.contains('active')) renderCalendar();
 }
 
-const COLORS={Strength:'var(--accent2)',Cardio:'var(--accent)',HIIT:'var(--warn)',Yoga:'var(--accent3)',Cycling:'#34d399',Swimming:'#38bdf8',Walk:'#a78bfa',Other:'var(--muted)'};
+const COLORS = { Strength:'var(--accent2)', Cardio:'var(--accent)', HIIT:'var(--warn)', Yoga:'var(--accent3)', Cycling:'#34d399', Swimming:'#38bdf8', Walk:'#a78bfa', 'Low-Impact':'#f472b6', Other:'var(--muted)' };
 
 function renderRecords() {
-  const total=workouts.length;
-  const totalC=workouts.reduce((a,b)=>a+(b.cals||0),0);
-  document.getElementById('trTotal').textContent=total;
-  document.getElementById('trStreak').textContent=calcStreak()+'🔥';
-  document.getElementById('trCals').textContent=totalC;
-  const wrap=document.getElementById('recordsWrap');
-  if(!total){wrap.innerHTML='<div style="text-align:center;padding:2.5rem;color:var(--muted);font-size:.88rem">No workouts logged yet.<br>Add your first session above! 💪</div>';return;}
-  wrap.innerHTML=`<div class="records-list">${workouts.map(w=>`
+  const total = workouts.length;
+  const totalC = workouts.reduce((a, b) => a + (b.cals || 0), 0);
+  document.getElementById('trTotal').textContent = total;
+  document.getElementById('trStreak').textContent = calcStreak() + '🔥';
+  document.getElementById('trCals').textContent = totalC;
+
+  const wrap = document.getElementById('recordsWrap');
+  if (!total) {
+    wrap.innerHTML = '<div style="text-align:center;padding:2.5rem;color:var(--muted);font-size:.88rem">No workouts logged yet.<br>Add your first session above! 💪</div>';
+    return;
+  }
+  wrap.innerHTML = `<div class="records-list">${workouts.map(w => `
     <div class="rec-row">
-      <div class="rec-dot" style="background:${COLORS[w.type]||'var(--muted)'}"></div>
+      <div class="rec-dot" style="background:${COLORS[w.type] || 'var(--muted)'}"></div>
       <div class="rec-info">
         <div class="rec-date">${w.disp}</div>
         <div class="rec-name">${w.type} · ${w.dur} min</div>
-        <div class="rec-meta">${w.cals?w.cals+' kcal burned':''}${w.notes?' · '+w.notes:''}</div>
+        <div class="rec-meta">${w.cals ? w.cals + ' kcal burned' : ''}${w.notes ? ' · ' + w.notes : ''}</div>
       </div>
       <button class="rec-del" onclick="delWO(${w.id})">🗑</button>
     </div>`).join('')}</div>`;
 }
 
 function calcStreak() {
-  if(!workouts.length) return 0;
-  const dates=[...new Set(workouts.map(w=>w.date))].sort().reverse();
-  const today=new Date().toISOString().split('T')[0];
-  let streak=0,check=today;
-  for(let i=0;i<365;i++){
-    if(dates.includes(check)) streak++;
-    else if(streak>0) break;
-    const d=new Date(check); d.setDate(d.getDate()-1);
-    check=d.toISOString().split('T')[0];
+  if (!workouts.length) return 0;
+  const dates = [...new Set(workouts.map(w => w.date))].sort().reverse();
+  const today = new Date().toISOString().split('T')[0];
+  let streak = 0, check = today;
+  for (let i = 0; i < 365; i++) {
+    if (dates.includes(check)) streak++;
+    else if (streak > 0) break;
+    const d = new Date(check); d.setDate(d.getDate() - 1);
+    check = d.toISOString().split('T')[0];
   }
   return streak;
 }
 
 // ── CALENDAR ──────────────────────────────────────────────
 function renderCalendar() {
-  const yr=calDate.getFullYear(), mo=calDate.getMonth();
-  const today=new Date(); today.setHours(0,0,0,0);
-  const months=['January','February','March','April','May','June','July','August','September','October','November','December'];
-  document.getElementById('calMonth').textContent=`${months[mo]} ${yr}`;
-  const firstDay=new Date(yr,mo,1).getDay();
-  const daysInMo=new Date(yr,mo+1,0).getDate();
-  const moPfx=`${yr}-${String(mo+1).padStart(2,'0')}`;
-  const woDates=new Set(workouts.map(w=>w.date));
+  const yr = calDate.getFullYear(), mo = calDate.getMonth();
+  const today = new Date(); today.setHours(0,0,0,0);
+  const months = ['January','February','March','April','May','June','July','August','September','October','November','December'];
+  document.getElementById('calMonth').textContent = `${months[mo]} ${yr}`;
+  const firstDay = new Date(yr, mo, 1).getDay();
+  const daysInMo = new Date(yr, mo + 1, 0).getDate();
+  const moPfx = `${yr}-${String(mo+1).padStart(2,'0')}`;
+  const woDates = new Set(workouts.map(w => w.date));
 
-  let html=['Sun','Mon','Tue','Wed','Thu','Fri','Sat'].map(d=>`<div class="cal-dow">${d}</div>`).join('');
-  for(let i=0;i<firstDay;i++) html+='<div class="cal-day empty"></div>';
+  let html = ['Sun','Mon','Tue','Wed','Thu','Fri','Sat'].map(d => `<div class="cal-dow">${d}</div>`).join('');
+  for (let i = 0; i < firstDay; i++) html += '<div class="cal-day empty"></div>';
 
-  let woCount=0,pastDays=0;
-  for(let d=1;d<=daysInMo;d++){
-    const ds=`${moPfx}-${String(d).padStart(2,'0')}`;
-    const dd=new Date(yr,mo,d);
-    const isToday=dd.getTime()===today.getTime();
-    const didWO=woDates.has(ds);
-    const isPast=dd<today;
-    if(isPast||isToday) pastDays++;
-    if(didWO) woCount++;
-    const isRest=isPast&&!didWO&&!isToday;
-    let cls='cal-day';
-    if(isToday) cls+=' today';
-    else if(didWO) cls+=' wo';
-    else if(isRest) cls+=' rest';
-    const wo=workouts.filter(w=>w.date===ds);
-    const tip=wo.length?`${wo.map(x=>x.type).join(', ')} (${wo.map(x=>x.dur).reduce((a,b)=>a+b,0)} min)`:'';
-    html+=`<div class="${cls}" title="${tip}">${d}<div class="dot"></div></div>`;
+  let woCount = 0, pastDays = 0;
+  for (let d = 1; d <= daysInMo; d++) {
+    const ds = `${moPfx}-${String(d).padStart(2,'0')}`;
+    const dd = new Date(yr, mo, d);
+    const isToday = dd.getTime() === today.getTime();
+    const didWO = woDates.has(ds);
+    const isPast = dd < today;
+    if (isPast || isToday) pastDays++;
+    if (didWO) woCount++;
+    const isRest = isPast && !didWO && !isToday;
+    let cls = 'cal-day';
+    if (isToday) cls += ' today';
+    else if (didWO) cls += ' wo';
+    else if (isRest) cls += ' rest';
+    const wo = workouts.filter(w => w.date === ds);
+    const tip = wo.length ? `${wo.map(x => x.type).join(', ')} (${wo.map(x => x.dur).reduce((a,b)=>a+b,0)} min)` : '';
+    html += `<div class="${cls}" title="${tip}">${d}<div class="dot"></div></div>`;
   }
-  document.getElementById('calGrid').innerHTML=html;
+  document.getElementById('calGrid').innerHTML = html;
 
-  const restCount=Math.max(0,pastDays-woCount);
-  const rate=pastDays>0?Math.round((woCount/pastDays)*100):0;
-  document.getElementById('calWO').textContent=woCount;
-  document.getElementById('calRest').textContent=restCount;
-  document.getElementById('calRate').textContent=rate+'%';
+  const restCount = Math.max(0, pastDays - woCount);
+  const rate = pastDays > 0 ? Math.round((woCount / pastDays) * 100) : 0;
+  document.getElementById('calWO').textContent = woCount;
+  document.getElementById('calRest').textContent = restCount;
+  document.getElementById('calRate').textContent = rate + '%';
 
-  const moWOs=workouts.filter(w=>w.date.startsWith(moPfx));
-  const cr=document.getElementById('calRecords');
-  if(!moWOs.length){cr.innerHTML='<div style="text-align:center;padding:1.5rem;color:var(--muted);font-size:.85rem">No workouts this month yet.</div>';return;}
-  cr.innerHTML=`<div class="records-list">${moWOs.map(w=>`
+  const moWOs = workouts.filter(w => w.date.startsWith(moPfx));
+  const cr = document.getElementById('calRecords');
+  if (!moWOs.length) {
+    cr.innerHTML = '<div style="text-align:center;padding:1.5rem;color:var(--muted);font-size:.85rem">No workouts this month yet.</div>';
+    return;
+  }
+  cr.innerHTML = `<div class="records-list">${moWOs.map(w => `
     <div class="rec-row">
-      <div class="rec-dot" style="background:${COLORS[w.type]||'var(--muted)'}"></div>
+      <div class="rec-dot" style="background:${COLORS[w.type] || 'var(--muted)'}"></div>
       <div class="rec-info">
         <div class="rec-date">${w.disp}</div>
         <div class="rec-name">${w.type} · ${w.dur} min</div>
-        <div class="rec-meta">${w.cals?w.cals+' kcal':''} ${w.notes?'· '+w.notes:''}</div>
+        <div class="rec-meta">${w.cals ? w.cals + ' kcal' : ''} ${w.notes ? '· ' + w.notes : ''}</div>
       </div>
     </div>`).join('')}</div>`;
 }
 
 function calNav(dir) {
-  calDate.setMonth(calDate.getMonth()+dir);
+  calDate.setMonth(calDate.getMonth() + dir);
   renderCalendar();
 }
 
-// ── TIPS ──────────────────────────────────────────────────
+// ── TIPS & HABITS ─────────────────────────────────────────
 const TIPS = {
   nutrition:[
-    {t:"Eat protein with every meal. It has the highest thermic effect — burning 20–30% of its own calories in digestion — and keeps you full longest.",s:"Nutrition Science"},
-    {t:"Meal prep on Sunday. Research shows meal-preppers consume 200–400 fewer calories per day and make significantly healthier choices throughout the week.",s:"Behavioral Nutrition"},
-    {t:"Eat slowly and chew thoroughly. It takes 20 minutes for your brain to register fullness — rushing meals leads to overeating by an average of 300 calories per sitting.",s:"Mindful Eating Research"},
-    {t:"Aim for half your plate to be non-starchy vegetables at every meal. They add volume, fiber, and micronutrients with very few calories.",s:"Dietary Guidelines"},
-    {t:"Avoid drinking calories. Liquid calories from juice, soda, and alcohol don't trigger the same satiety signals as solid food — making it easy to overconsume without realizing.",s:"Nutrition Research"},
-    {t:"Never skip breakfast when trying to build muscle. Your body has been fasting overnight and protein synthesis drops — a protein-rich breakfast restores it fast.",s:"Sports Nutrition"},
+    { t:"Eat protein with every meal. It has the highest thermic effect — burning 20–30% of its calories in digestion — and promotes prolonged satiety.", s:"Nutrition Science" },
+    { t:"Meal prep on Sunday. Studies show meal-preppers consume 200–400 fewer calories per day and make healthier whole food choices.", s:"Behavioral Nutrition" },
+    { t:"Eat slowly and chew thoroughly. It takes 20 minutes for leptin to register fullness — rushing meals increases overconsumption.", s:"Mindful Eating Research" },
+    { t:"Fill half your plate with non-starchy vegetables at major meals to add volume and essential micronutrients with low caloric density.", s:"Dietary Guidelines" },
+    { t:"Avoid drinking calories. Liquid calories from sodas, juices, and alcohol fail to stimulate the brain's fullness receptors effectively.", s:"Nutrition Research" }
   ],
   training:[
-    {t:"Compound movements — squats, deadlifts, bench press — should be the foundation of any program. They recruit the most muscle mass and trigger the highest hormonal response.",s:"Strength Science"},
-    {t:"Progressive overload is the single most important principle for muscle growth. If you're not consistently adding weight, reps, or sets over time, you won't grow.",s:"Exercise Physiology"},
-    {t:"Train each muscle group at least twice per week for optimal hypertrophy. Full-body or upper/lower splits consistently outperform bro splits for natural athletes.",s:"Hypertrophy Research"},
-    {t:"Warm up for 5–10 minutes before every session. A proper warm-up increases muscle temperature, reduces injury risk, and can improve performance by 5–10%.",s:"Sports Medicine"},
-    {t:"Track your workouts. Athletes who log their sessions are 30% more consistent and see 40% better results than those who train without records.",s:"Performance Psychology"},
-    {t:"HIIT burns more calories in less time than steady-state cardio and continues burning calories for up to 24 hours post-workout through the afterburn effect.",s:"Exercise Science"},
+    { t:"Compound movements like squats, presses, and rows form the cornerstone of strength. They stimulate the highest hormonal and muscle synthesis response.", s:"Strength Science" },
+    { t:"Progressive overload is the central driver for muscular adaptation. Incrementally increase weight, reps, or control over time.", s:"Exercise Physiology" },
+    { t:"Train each muscle group at least twice weekly for optimal hypertrophy rather than blasting a muscle only once every 7 days.", s:"Hypertrophy Research" },
+    { t:"Warm up dynamically for 5–10 minutes before loading joints to raise synovial fluid temperature and reduce acute strain.", s:"Sports Medicine" }
   ],
   recovery:[
-    {t:"Sleep is your most powerful recovery tool. During deep sleep your body releases growth hormone, repairs muscle tissue, and consolidates motor patterns learned during training.",s:"Sleep Science"},
-    {t:"Active recovery beats total rest on off days. A 20–30 minute walk or light yoga increases blood flow, reduces soreness, and speeds recovery by up to 40%.",s:"Recovery Research"},
-    {t:"Dehydration of just 2% body weight impairs strength by 3–7% and reduces endurance significantly. Drink water consistently throughout the day, not just during workouts.",s:"Hydration Science"},
-    {t:"Foam rolling and stretching after workouts reduces next-day muscle soreness (DOMS) by 20–30% and improves long-term flexibility and range of motion.",s:"Sports Therapy"},
-    {t:"Chronically elevated cortisol leads to muscle breakdown, belly fat storage, and poor sleep quality — all directly sabotaging your fitness goals. Manage stress actively.",s:"Stress Physiology"},
-    {t:"Take a deload week every 4–8 weeks by reducing training volume by 40–60%. This allows full nervous system recovery and often leads to PRs the following week.",s:"Periodization Science"},
+    { t:"Deep sleep is your primary recovery mechanism. Human growth hormone release peaks during slow-wave sleep to repair muscular micro-trauma.", s:"Sleep Science" },
+    { t:"Active recovery walks or gentle mobility routines on off-days enhance blood flow and reduce delayed onset muscle soreness (DOMS).", s:"Recovery Research" },
+    { t:"A deload or maintenance week every 8–10 weeks prevents central nervous system fatigue and allows connective tissue remodeling.", s:"Periodization Science" }
   ],
   mindset:[
-    {t:"Focus on building systems, not chasing motivation. Motivation is unreliable — consistent habits and smart environmental design produce long-term results.",s:"Behavioral Psychology"},
-    {t:"The best workout is the one you'll actually do. Consistency over 6 months always beats perfection for 2 weeks. Done is better than perfect.",s:"Habit Research"},
-    {t:"Celebrate small wins. Each completed workout and healthy meal is evidence that you are the type of person who takes care of their body — identity drives behavior.",s:"Identity-Based Habits"},
-    {t:"Your environment shapes your behavior more than willpower. Put your gym bag by the door, remove junk food from the house, and surround yourself with your goal.",s:"Environmental Design"},
-    {t:"People who view exercise as something they 'get to do' rather than 'have to do' are 52% more consistent over a full year. Reframe it as a gift, not a punishment.",s:"Motivational Psychology"},
-    {t:"Progress photos and measurements beat scale weight every time. The scale can't distinguish between muscle and fat — document body composition for true progress.",s:"Tracking Methods"},
+    { t:"Rely on structured systems rather than transient motivation. Consistent daily habits outperform short bursts of extreme willpower.", s:"Behavioral Psychology" },
+    { t:"The best routine is the one you can sustain for 12 months. Consistency over time always outperforms short-term perfection.", s:"Habit Research" }
   ],
   fatLoss:[
-    {t:"A 500 calorie/day deficit leads to ~0.5 kg fat loss per week. This is sustainable and preserves muscle mass far better than aggressive crash diets.",s:"Fat Loss Science"},
-    {t:"Eat more fiber. High-fiber foods slow digestion, stabilize blood sugar, feed gut bacteria, and help you feel full longer. Aim for 25–35g per day.",s:"Nutritional Medicine"},
-    {t:"Strength training during a caloric deficit preserves muscle mass and keeps metabolism elevated. Without lifting, up to 30% of weight lost may come from muscle, not fat.",s:"Body Recomposition"},
-    {t:"Sleep deprivation increases ghrelin (hunger hormone) by 24% and decreases leptin (fullness hormone) — making dieting nearly impossible when you're under-rested.",s:"Sleep & Metabolism"},
-    {t:"Eat before going to social events or grocery shopping. Hungry decision-making leads to choosing 50% more high-calorie foods on average.",s:"Decision Fatigue Research"},
+    { t:"A 400–500 kcal deficit produces ~0.5 kg fat loss per week while preserving vital metabolically active muscle tissue.", s:"Fat Loss Science" },
+    { t:"Prioritize dietary fiber (25–35g/day). Fiber stabilizes blood sugar curves and slows gastric emptying for sustained fullness.", s:"Nutritional Medicine" }
   ],
   muscleGain:[
-    {t:"Muscle protein synthesis peaks 2–3 hours after training. Consuming 30–40g of high-quality protein in this window maximizes muscle repair and growth.",s:"Sports Nutrition"},
-    {t:"Creatine monohydrate is the most research-backed supplement for muscle gain, with hundreds of studies showing 5–15% increases in strength and lean mass.",s:"Supplement Research"},
-    {t:"Eat in a slight surplus of 250–400 calories above TDEE. Larger surpluses don't build more muscle — they just add more fat alongside it.",s:"Bulking Science"},
-    {t:"Heavy squats and deadlifts trigger systemic anabolic hormone release that benefits your whole body. Never skip leg day — the lower body has 70% of your muscle mass.",s:"Exercise Science"},
-    {t:"Slowing the eccentric (lowering) phase of lifts to 3–4 seconds increases muscle damage and hypertrophic signaling — a simple way to boost gains with the same weight.",s:"Hypertrophy Science"},
-  ],
+    { t:"Consuming 25–40g of complete protein every 3–4 hours keeps muscle protein synthesis elevated throughout the entire day.", s:"Sports Nutrition" },
+    { t:"A modest surplus of 250–350 kcal fuels lean muscle development without adding excessive adipose fat stores.", s:"Hypertrophy Science" }
+  ]
 };
 
-const CATS=[
-  {id:'all',label:'All',icon:'💡'},
-  {id:'nutrition',label:'Nutrition',icon:'🥗'},
-  {id:'training',label:'Training',icon:'🏋️'},
-  {id:'recovery',label:'Recovery',icon:'😴'},
-  {id:'mindset',label:'Mindset',icon:'🧠'},
-  {id:'fatLoss',label:'Fat Loss',icon:'🔥'},
-  {id:'muscleGain',label:'Muscle',icon:'💪'},
+const CATS = [
+  { id:'all', label:'All', icon:'💡' },
+  { id:'nutrition', label:'Nutrition', icon:'🥗' },
+  { id:'training', label:'Training', icon:'🏋️' },
+  { id:'recovery', label:'Recovery', icon:'😴' },
+  { id:'mindset', label:'Mindset', icon:'🧠' },
+  { id:'fatLoss', label:'Fat Loss', icon:'🔥' },
+  { id:'muscleGain', label:'Muscle', icon:'💪' }
 ];
 
 function flatTips(cat) {
-  if(cat==='all') return Object.values(TIPS).flat();
-  return TIPS[cat]||[];
+  if (cat === 'all') return Object.values(TIPS).flat();
+  return TIPS[cat] || [];
 }
 
 function renderTips() {
-  // Category buttons
-  document.getElementById('catBtns').innerHTML=CATS.map(c=>
-    `<button class="cat-btn ${activeCat===c.id?'active':''}" onclick="selCat('${c.id}')">${c.icon} ${c.label}</button>`
+  document.getElementById('catBtns').innerHTML = CATS.map(c =>
+    `<button class="cat-btn ${activeCat === c.id ? 'active' : ''}" onclick="selCat('${c.id}')">${c.icon} ${c.label}</button>`
   ).join('');
 
-  // Daily tip
-  const goalCat = userData.goal==='lose'?'fatLoss':userData.goal==='gain'?'muscleGain':'training';
-  const pool=TIPS[goalCat]||TIPS.training;
-  const doy=Math.floor((new Date()-new Date(new Date().getFullYear(),0,0))/86400000);
-  const tip=pool[(doy+tipIdx)%pool.length];
-  document.getElementById('tipText').textContent=tip.t;
-  document.getElementById('tipSrc').textContent='📚 '+tip.s;
-  document.getElementById('tipTag').textContent=`💡 ${userData.goal==='lose'?'Fat Loss':userData.goal==='gain'?'Muscle Gain':'Fitness'} Tip · Today`;
+  const goalCat = userData.goal === 'lose' ? 'fatLoss' : userData.goal === 'gain' ? 'muscleGain' : 'training';
+  const pool = TIPS[goalCat] || TIPS.training;
+  const doy = Math.floor((new Date() - new Date(new Date().getFullYear(), 0, 0)) / 86400000);
+  const tip = pool[(doy + tipIdx) % pool.length];
+  document.getElementById('tipText').textContent = tip.t;
+  document.getElementById('tipSrc').textContent = '📚 ' + tip.s;
+  document.getElementById('tipTag').textContent = `💡 ${userData.goal === 'lose' ? 'Fat Loss' : userData.goal === 'gain' ? 'Muscle Gain' : 'Fitness'} Tip · Today`;
 
   renderCatTips();
   renderHabits();
 }
 
-function nextTip(){tipIdx++;renderTips();}
-
-function selCat(c){activeCat=c;renderTips();}
+function nextTip(){ tipIdx++; renderTips(); }
+function selCat(c){ activeCat = c; renderTips(); }
 
 function renderCatTips() {
-  const tips=flatTips(activeCat).slice(0,6);
-  document.getElementById('catTips').innerHTML=`<div class="tip-grid">${tips.map(t=>
+  const tips = flatTips(activeCat).slice(0, 6);
+  document.getElementById('catTips').innerHTML = `<div class="tip-grid">${tips.map(t =>
     `<div class="mini-tip"><div class="mini-tip-src">${t.s}</div><div class="mini-tip-body">${t.t}</div></div>`
   ).join('')}</div>`;
 }
 
 function renderHabits() {
-  const goal=userData.goal||'maintain';
-  const habits=goal==='lose'
-    ?[{i:'💧',l:'Drink 8 glasses of water'},{i:'🚶',l:'Walk 8,000+ steps'},{i:'🥗',l:'Log all meals'},{i:'😴',l:'Sleep 7–9 hours'},{i:'🏋️',l:'Complete workout'},{i:'🚫',l:'Avoid processed foods'}]
-    :goal==='gain'
-    ?[{i:'🍗',l:'Hit protein target'},{i:'🏋️',l:'Complete workout'},{i:'🍌',l:'Eat caloric surplus'},{i:'😴',l:'Sleep 8+ hours'},{i:'💊',l:'Take creatine'},{i:'📝',l:'Log lifts'}]
-    :[{i:'💧',l:'Stay hydrated'},{i:'🏃',l:'30 min activity'},{i:'🥦',l:'Eat veggies'},{i:'😴',l:'Sleep 7–9 hours'},{i:'🧘',l:'5 min mindfulness'},{i:'📖',l:'Learn something new'}];
+  const goal = userData.goal || 'maintain';
+  const habits = goal === 'lose'
+    ? [{ i:'💧', l:'Hit baseline water target' }, { i:'🚶', l:'Accumulate 7,000–9,000 steps' }, { i:'🥗', l:'Log meals within calorie budget' }, { i:'😴', l:'7–8 hours of quality sleep' }, { i:'🏋️', l:'Complete planned physical activity' }, { i:'🚫', l:'Avoid sugary liquid calories' }]
+    : goal === 'gain'
+    ? [{ i:'🍗', l:'Hit safe protein target' }, { i:'🏋️', l:'Complete progressive overload lifts' }, { i:'🍌', l:'Eat in controlled surplus' }, { i:'😴', l:'Sleep 8+ hours' }, { i:'💧', l:'Adequate hydration' }, { i:'📝', l:'Log workout weights' }]
+    : [{ i:'💧', l:'Stay hydrated' }, { i:'🏃', l:'30 min active movement' }, { i:'🥦', l:'Eat vegetables with major meals' }, { i:'😴', l:'Sleep 7–8 hours' }, { i:'🧘', l:'5 min mindfulness' }, { i:'📖', l:'Learn something new' }];
 
-  const key='fp_h_'+new Date().toISOString().split('T')[0];
-  let saved={};
-  try{saved=JSON.parse(localStorage.getItem(key)||'{}');}catch(e){}
-  const done=Object.values(saved).filter(Boolean).length;
+  const key = 'fp_h_' + new Date().toISOString().split('T')[0];
+  let saved = {};
+  try { saved = JSON.parse(localStorage.getItem(key) || '{}'); } catch(e){}
+  const done = Object.values(saved).filter(Boolean).length;
 
-  document.getElementById('habitCard').innerHTML=`
+  document.getElementById('habitCard').innerHTML = `
     <div class="card-title" style="margin-bottom:1rem"><div class="icon" style="background:rgba(251,191,36,.12);color:var(--warn)">✅</div>Today's Habits <span style="font-size:.8rem;font-weight:400;color:var(--muted);margin-left:.5rem">${done}/${habits.length} done</span></div>
-    ${habits.map((h,i)=>{
-      const ck=!!saved[i];
-      return `<div class="habit-row ${ck?'done':''}" onclick="toggleHabit(${i})">
-        <div class="habit-cb">${ck?'✓':''}</div>
+    ${habits.map((h, i) => {
+      const ck = !!saved[i];
+      return `<div class="habit-row ${ck ? 'done' : ''}" onclick="toggleHabit(${i})">
+        <div class="habit-cb">${ck ? '✓' : ''}</div>
         <span class="habit-label">${h.i} ${h.l}</span>
       </div>`;
     }).join('')}`;
 }
 
 function toggleHabit(i) {
-  const key='fp_h_'+new Date().toISOString().split('T')[0];
-  let saved={};
-  try{saved=JSON.parse(localStorage.getItem(key)||'{}');}catch(e){}
-  saved[i]=!saved[i];
-  localStorage.setItem(key,JSON.stringify(saved));
+  const key = 'fp_h_' + new Date().toISOString().split('T')[0];
+  let saved = {};
+  try { saved = JSON.parse(localStorage.getItem(key) || '{}'); } catch(e){}
+  saved[i] = !saved[i];
+  localStorage.setItem(key, JSON.stringify(saved));
   renderHabits();
 }
 
-// ── DIET ENGINE ───────────────────────────────────────────
-let activeDietView = 'veg';
-
+// ── DIET ENGINE WITH REALISTIC PROTEIN & MACROS ────────────
 function setDietView(v) {
   activeDietView = v;
   document.querySelectorAll('.diet-toggle-btn').forEach(b => b.classList.remove('active'));
@@ -1094,56 +1367,42 @@ function renderDiet() {
     return;
   }
 
-  const { calT, goal, w, sex, age, dietPref } = userData;
+  const { calT, goal, adjustedWeight } = userData;
   const isVeg = activeDietView === 'veg';
   const goalLabel = goal === 'lose' ? 'Fat Loss' : goal === 'gain' ? 'Muscle Gain' : 'Maintenance';
 
-  // ── MACRO TARGETS ───────────────────────────────────────
-  // Protein: lose=1.8g/kg, gain=2.2g/kg, maintain=1.6g/kg
-  const proteinMult = goal === 'gain' ? 2.2 : goal === 'lose' ? 1.8 : 1.6;
-  const protein = Math.round(w * proteinMult);
+  // Safe capped protein (60g - 180g) based on adjusted weight
+  let proMult = goal === 'gain' ? 1.8 : goal === 'lose' ? 1.6 : 1.2;
+  const protein = Math.min(Math.max(Math.round(adjustedWeight * proMult), 60), 180);
   const proteinCal = protein * 4;
 
-  // Fat: 25-30% of calories
   const fatPct = goal === 'lose' ? 0.25 : 0.28;
   const fat = Math.round((calT * fatPct) / 9);
   const fatCal = fat * 9;
 
-  // Carbs: remainder
   const carbs = Math.round((calT - proteinCal - fatCal) / 4);
   const carbsCal = carbs * 4;
 
-  // Fibre
-  const fibre = goal === 'lose' ? 35 : 28;
-
-  // Sugar limit
-  const sugarLimit = Math.round(calT * 0.05 / 4); // <5% total cal
-
-  // Saturated fat limit
+  const fibre = 28;
+  const sugarLimit = Math.round(calT * 0.05 / 4);
   const satFatLimit = Math.round((calT * 0.1) / 9);
+  const water = Math.min(Math.max(Math.round(adjustedWeight * 0.033 * 10) / 10, 1.5), 3.5);
+  const sodium = 2300;
 
-  // Water
-  const water = Math.round(w * 0.033 * 10) / 10;
-
-  // Sodium
-  const sodium = 2300; // mg/day max
-
-  // ── INTRO TEXT ──────────────────────────────────────────
   const prefLabel = isVeg ? 'vegetarian' : 'non-vegetarian';
   document.getElementById('dietIntroText').textContent =
-    `Your personalised ${prefLabel} ${goalLabel.toLowerCase()} plan — calculated from your weight (${Math.round(w)}kg), daily calorie target (${calT} kcal), and goal. Every nutrient target below is specific to you.`;
+    `Your personalised ${prefLabel} ${goalLabel.toLowerCase()} plan — calculated using your adjusted weight (${Math.round(adjustedWeight)}kg) and safe calorie budget (${calT} kcal).`;
 
-  // ── NUTRIENT TARGETS CARD ───────────────────────────────
   const nutrients = [
-    { icon:'🔥', name:'Total Calories',    amount: calT,        unit:'kcal/day', sub: goal==='lose'?'500 kcal below TDEE':goal==='gain'?'300 kcal above TDEE':'At maintenance', color:'var(--accent2)', pct:100 },
-    { icon:'🥩', name:'Protein',           amount: protein,     unit:'g/day',    sub: `${Math.round(proteinMult*10)/10}g × ${Math.round(w)}kg · ${proteinCal} kcal · ${Math.round(proteinCal/calT*100)}% of diet`, color:'var(--accent)', pct: Math.round(proteinCal/calT*100) },
-    { icon:'🌾', name:'Carbohydrates',     amount: carbs,       unit:'g/day',    sub: `${carbsCal} kcal · ${Math.round(carbsCal/calT*100)}% of diet · focus on complex carbs`, color:'var(--warn)', pct: Math.round(carbsCal/calT*100) },
-    { icon:'🥑', name:'Total Fat',         amount: fat,         unit:'g/day',    sub: `${fatCal} kcal · ${Math.round(fatPct*100)}% of diet · prioritise unsaturated fats`, color:'var(--accent3)', pct: Math.round(fatPct*100) },
-    { icon:'🚫', name:'Saturated Fat',     amount: satFatLimit, unit:'g/day max',sub: 'Keep below 10% of total calories — limit butter, cream, processed meats', color:'var(--danger)', pct: Math.round(satFatLimit*9/calT*100) },
-    { icon:'🥦', name:'Dietary Fibre',     amount: fibre,       unit:'g/day',    sub: goal==='lose'?'Higher target for satiety & gut health':'Standard healthy target', color:'#34d399', pct: 70 },
-    { icon:'🍬', name:'Added Sugar',       amount: sugarLimit,  unit:'g/day max',sub: `Less than 5% of total calories (${sugarLimit*4} kcal) — avoid sugary drinks & desserts`, color:'#f97316', pct: 15 },
-    { icon:'🧂', name:'Sodium',            amount: sodium,      unit:'mg/day max',sub:'Limit processed foods, fast food, and excess salt', color:'#94a3b8', pct: 60 },
-    { icon:'💧', name:'Water',             amount: water,       unit:'L/day',    sub: `Based on ${Math.round(w)}kg bodyweight — increase on workout days`, color:'#38bdf8', pct: 80 },
+    { icon:'🔥', name:'Total Calories', amount: calT, unit:'kcal/day', sub: goal==='lose'?'Safe Deficit Target':'Calibrated Target', color:'var(--accent2)', pct:100 },
+    { icon:'🥩', name:'Protein (Safe Cap)', amount: protein, unit:'g/day', sub: `${proteinCal} kcal · Scaled to lean mass (Max 180g)`, color:'var(--accent)', pct: Math.round(proteinCal/calT*100) },
+    { icon:'🌾', name:'Carbohydrates', amount: carbs, unit:'g/day', sub: `${carbsCal} kcal · Sustained energy sources`, color:'var(--warn)', pct: Math.round(carbsCal/calT*100) },
+    { icon:'🥑', name:'Total Fat', amount: fat, unit:'g/day', sub: `${fatCal} kcal · Hormonal support`, color:'var(--accent3)', pct: Math.round(fatPct*100) },
+    { icon:'🚫', name:'Saturated Fat', amount: satFatLimit, unit:'g/day max', sub:'Keep below 10% of total energy', color:'var(--danger)', pct: Math.round(satFatLimit*9/calT*100) },
+    { icon:'🥦', name:'Dietary Fibre', amount: fibre, unit:'g/day', sub: 'Promotes gut motility and fullness', color:'#34d399', pct: 70 },
+    { icon:'🍬', name:'Added Sugar', amount: sugarLimit, unit:'g/day max', sub: '<5% of total calories', color:'#f97316', pct: 15 },
+    { icon:'🧂', name:'Sodium', amount: sodium, unit:'mg/day max', sub:'Limit processed salt intake', color:'#94a3b8', pct: 60 },
+    { icon:'💧', name:'Water', amount: water, unit:'L/day', sub: 'Safely bounded baseline hydration', color:'#38bdf8', pct: 80 }
   ];
 
   document.getElementById('nutrientTargetCard').innerHTML = nutrients.map(n => `
@@ -1160,7 +1419,6 @@ function renderDiet() {
       </div>
     </div>`).join('');
 
-  // ── MACRO RING CHART ────────────────────────────────────
   const protPct = Math.round(proteinCal / calT * 100);
   const carbPct = Math.round(carbsCal / calT * 100);
   const fatPctVal = 100 - protPct - carbPct;
@@ -1186,47 +1444,27 @@ function renderDiet() {
       ${ring(protPct, 'var(--accent)', 'Protein', protein, 'g')}
       ${ring(carbPct, 'var(--warn)', 'Carbs', carbs, 'g')}
       ${ring(fatPctVal, 'var(--accent3)', 'Fat', fat, 'g')}
-    </div>
-    <div style="background:var(--surface);border-radius:12px;padding:.9rem;margin-top:.5rem">
-      <div style="font-size:.78rem;color:var(--subtle);line-height:1.7">
-        <strong style="color:var(--text)">Why these ratios?</strong><br>
-        ${goal==='lose'
-          ? 'High protein preserves muscle during a deficit. Moderate fat supports hormones. Lower carbs reduce insulin spikes and improve fat burning.'
-          : goal==='gain'
-          ? 'High protein drives muscle protein synthesis. High carbs fuel heavy training and replenish glycogen. Moderate fat supports testosterone production.'
-          : 'Balanced macros support energy, recovery, and long-term health. Protein maintains muscle, carbs fuel daily activity, fat supports brain and hormone function.'}
-      </div>
     </div>`;
 
-  // ── MICRONUTRIENTS ──────────────────────────────────────
   const micros = isVeg ? [
-    { icon:'🦴', name:'Calcium',    amount:'1000mg', why:'Bone density — get from dairy, tofu, fortified plant milk, leafy greens', status:'Monitor', sc:'var(--warn)' },
-    { icon:'🩸', name:'Iron',       amount:'18mg',   why:'Oxygen transport — non-heme iron from lentils, spinach, tofu. Pair with Vitamin C to boost absorption by 3×', status:'Critical', sc:'var(--danger)' },
-    { icon:'⚡', name:'Vitamin B12',amount:'2.4mcg', why:'Nerve function & red blood cells — only found naturally in animal products. Take a B12 supplement daily if fully plant-based', status:'Supplement', sc:'var(--accent3)' },
-    { icon:'☀️', name:'Vitamin D',  amount:'600 IU', why:'Bone health & immunity — 15 min sun/day or supplement especially in winter', status:'Monitor', sc:'var(--warn)' },
-    { icon:'🌰', name:'Zinc',       amount:'11mg',   why:'Immunity & testosterone — pumpkin seeds, chickpeas, nuts. Absorption is lower from plant sources', status:'Monitor', sc:'var(--warn)' },
-    { icon:'🧠', name:'Omega-3',    amount:'1.6g ALA',why:'Brain & heart health — flaxseeds, walnuts, chia seeds. Consider algae-based DHA/EPA supplement', status:'Monitor', sc:'var(--warn)' },
-    { icon:'💪', name:'Magnesium',  amount:'400mg',  why:'Muscle function & sleep — dark chocolate, legumes, nuts, whole grains', status:'Good', sc:'var(--accent)' },
-    { icon:'🍊', name:'Vitamin C',  amount:'90mg',   why:'Immunity & collagen — bell peppers, citrus, strawberries. Also boosts iron absorption', status:'Good', sc:'var(--accent)' },
+    { icon:'🦴', name:'Calcium', amount:'1000mg', why:'Bone density — dairy, fortified plant milk, greens', status:'Good', sc:'var(--accent)' },
+    { icon:'🩸', name:'Iron', amount:'18mg', why:'Lentils, spinach, tofu. Pair with Vitamin C to boost uptake by 3×', status:'Critical', sc:'var(--danger)' },
+    { icon:'⚡', name:'Vitamin B12', amount:'2.4mcg', why:'Nerve transmission & red blood cell synthesis', status:'Supplement', sc:'var(--accent3)' },
+    { icon:'☀️', name:'Vitamin D', amount:'600 IU', why:'Immunity & bone mineral density', status:'Monitor', sc:'var(--warn)' },
+    { icon:'🧠', name:'Omega-3', amount:'1.6g ALA', why:'Flaxseeds, walnuts, chia seeds', status:'Monitor', sc:'var(--warn)' }
   ] : [
-    { icon:'🦴', name:'Calcium',    amount:'1000mg', why:'Bone density — dairy, sardines, salmon with bones, fortified foods', status:'Good', sc:'var(--accent)' },
-    { icon:'🩸', name:'Iron',       amount:'18mg',   why:'Oxygen transport — red meat, liver, chicken. Heme iron absorbs 2–3× better than plant iron', status:'Good', sc:'var(--accent)' },
-    { icon:'⚡', name:'Vitamin B12',amount:'2.4mcg', why:'Nerve function — naturally abundant in meat, fish, eggs, dairy. No supplement needed', status:'Good', sc:'var(--accent)' },
-    { icon:'☀️', name:'Vitamin D',  amount:'600 IU', why:'Bone health — fatty fish (salmon, mackerel), egg yolks. Still supplement in winter', status:'Monitor', sc:'var(--warn)' },
-    { icon:'🌰', name:'Zinc',       amount:'11mg',   why:'Immunity & testosterone — beef, shellfish, pork. Highly bioavailable from animal sources', status:'Good', sc:'var(--accent)' },
-    { icon:'🧠', name:'Omega-3',    amount:'1.6g EPA/DHA',why:'Brain & heart health — salmon, mackerel, sardines 2–3× per week', status:'Good', sc:'var(--accent)' },
-    { icon:'💪', name:'Magnesium',  amount:'400mg',  why:'Muscle function — dark chocolate, nuts, fish, whole grains', status:'Good', sc:'var(--accent)' },
-    { icon:'🍊', name:'Vitamin C',  amount:'90mg',   why:'Immunity — bell peppers, citrus, broccoli. Often low in meat-heavy diets without vegetables', status:'Monitor', sc:'var(--warn)' },
+    { icon:'🦴', name:'Calcium', amount:'1000mg', why:'Dairy, bone-in fish, fortified options', status:'Good', sc:'var(--accent)' },
+    { icon:'🩸', name:'Iron (Heme)', amount:'18mg', why:'Chicken, eggs, lean meats — high bioavailability', status:'Good', sc:'var(--accent)' },
+    { icon:'⚡', name:'Vitamin B12', amount:'2.4mcg', why:'Abundant in eggs, meat, and poultry', status:'Good', sc:'var(--accent)' },
+    { icon:'☀️', name:'Vitamin D', amount:'600 IU', why:'Salmon, mackerel, egg yolks', status:'Monitor', sc:'var(--warn)' },
+    { icon:'🧠', name:'Omega-3 (EPA/DHA)', amount:'1.6g', why:'Fatty cold-water fish', status:'Good', sc:'var(--accent)' }
   ];
 
   document.getElementById('microCard').innerHTML = micros.map(m => `
     <div class="micro-row">
       <div class="micro-left">
         <span style="font-size:1.2rem;width:26px;text-align:center">${m.icon}</span>
-        <div>
-          <div class="micro-name">${m.name}</div>
-          <div class="micro-why">${m.why}</div>
-        </div>
+        <div><div class="micro-name">${m.name}</div><div class="micro-why">${m.why}</div></div>
       </div>
       <div class="micro-right">
         <div class="micro-amount" style="color:${m.sc}">${m.amount}</div>
@@ -1234,11 +1472,8 @@ function renderDiet() {
       </div>
     </div>`).join('');
 
-  // ── MEAL PLAN ────────────────────────────────────────────
-  const mealTitle = document.getElementById('mealPlanTitle');
-  mealTitle.textContent = `${isVeg ? '🥦 Vegetarian' : '🍗 Non-Vegetarian'} Meal Plan — ${goalLabel}`;
-
-  const meals = getMealPlan(isVeg, goal, protein, carbs, fat, calT);
+  document.getElementById('mealPlanTitle').textContent = `${isVeg ? '🥦 Vegetarian' : '🍗 Non-Vegetarian'} Meal Blueprint — ${goalLabel}`;
+  const meals = getMealPlan(isVeg, goal, calT);
   document.getElementById('mealPlanContainer').innerHTML = meals.map(m => `
     <div class="meal-card">
       <div class="meal-header">
@@ -1253,239 +1488,80 @@ function renderDiet() {
           <span class="food-name">${f.n}</span>
           <span class="food-macros">P:${f.p}g · C:${f.c}g · F:${f.fa}g</span>
         </div>`).join('')}
-      <div style="margin-top:.6rem;padding:.5rem .7rem;background:var(--surface);border-radius:8px;font-size:.73rem;color:var(--muted)">
-        🍽️ Meal total — Protein: <strong style="color:var(--accent)">${m.foods.reduce((a,f)=>a+f.p,0)}g</strong> · Carbs: <strong style="color:var(--warn)">${m.foods.reduce((a,f)=>a+f.c,0)}g</strong> · Fat: <strong style="color:var(--accent3)">${m.foods.reduce((a,f)=>a+f.fa,0)}g</strong>
-      </div>
     </div>`).join('');
 
-  // ── AVOID LIST ──────────────────────────────────────────
-  const avoidItems = goal === 'lose' ? [
-    {e:'🥤',t:'Sugary drinks & juice'},  {e:'🍟',t:'Deep fried foods'},
-    {e:'🍞',t:'White bread & refined carbs'},{e:'🍰',t:'Pastries & desserts'},
-    {e:'🍺',t:'Alcohol'},               {e:'🧂',t:'Excess sodium / salty snacks'},
-    {e:'🍫',t:'Milk chocolate & candy'},{e:'🥡',t:'Ultra-processed ready meals'},
-  ] : goal === 'gain' ? [
-    {e:'🚬',t:'Alcohol (limits gains)'}, {e:'🧃',t:'Empty calorie drinks'},
-    {e:'🍟',t:'Trans fat fried foods'},  {e:'🍰',t:'High sugar sweets'},
-    {e:'☕',t:'Excess caffeine (>400mg)'},{e:'🧂',t:'Very high sodium foods'},
-    {e:'💊',t:'Unregulated supplements'},{e:'🥡',t:'Low protein fast food'},
-  ] : [
-    {e:'🥤',t:'Sugary drinks'},          {e:'🍟',t:'Fried fast food'},
-    {e:'🍰',t:'Excess sugar & sweets'},  {e:'🧂',t:'High sodium processed food'},
-    {e:'🍺',t:'Excess alcohol'},         {e:'🥡',t:'Ultra-processed snacks'},
-    {e:'🍞',t:'Refined white carbs'},    {e:'🧈',t:'Trans fats & margarine'},
+  const avoidItems = [
+    { e:'🥤', t:'Liquid sugar & sweetened beverages' },
+    { e:'🍟', t:'Deep-fried foods with industrial trans fats' },
+    { e:'🍞', t:'Highly refined white flour pastries' },
+    { e:'🍺', t:'Excessive alcohol (impairs recovery)' }
   ];
-
   document.getElementById('avoidCard').innerHTML = `
-    <div class="avoid-grid">
-      ${avoidItems.map(a => `<div class="avoid-item"><span>${a.e}</span><span>${a.t}</span></div>`).join('')}
-    </div>`;
+    <div class="avoid-grid">${avoidItems.map(a => `<div class="avoid-item"><span>${a.e}</span><span>${a.t}</span></div>`).join('')}</div>`;
 }
 
-function getMealPlan(isVeg, goal, protein, carbs, fat, calT) {
-  // Split calories across 5 meals: 25% / 10% / 30% / 10% / 25%
-  const splits = [0.25, 0.10, 0.30, 0.10, 0.25];
+function getMealPlan(isVeg, goal, calT) {
+  const splits = [0.25, 0.10, 0.35, 0.30];
   const kcals = splits.map(s => Math.round(calT * s));
 
   if (isVeg) {
-    if (goal === 'lose') return [
-      { icon:'🌅', name:'Breakfast', time:'7:00 AM', kcal:kcals[0], color:'var(--warn)', foods:[
-        {e:'🥣',n:'Overnight oats (60g rolled oats)',              p:8,  c:42, fa:5},
-        {e:'🫐',n:'Mixed berries (100g)',                          p:1,  c:12, fa:0},
-        {e:'🥛',n:'Low-fat Greek yogurt (150g)',                   p:15, c:7,  fa:2},
-        {e:'🌰',n:'Chia seeds (1 tbsp)',                           p:2,  c:4,  fa:3},
-      ]},
-      { icon:'🍎', name:'Morning Snack', time:'10:30 AM', kcal:kcals[1], color:'var(--accent)', foods:[
-        {e:'🍎',n:'Apple (1 medium)',                              p:0,  c:25, fa:0},
-        {e:'🥜',n:'Almonds (15g)',                                 p:3,  c:2,  fa:8},
-      ]},
-      { icon:'☀️', name:'Lunch', time:'1:00 PM', kcal:kcals[2], color:'var(--accent2)', foods:[
-        {e:'🫘',n:'Lentil dal (200g cooked)',                      p:18, c:34, fa:3},
-        {e:'🍚',n:'Brown rice (100g cooked)',                      p:3,  c:23, fa:1},
-        {e:'🥗',n:'Cucumber + tomato salad (200g)',               p:2,  c:8,  fa:1},
-        {e:'🥛',n:'Buttermilk / chaas (200ml)',                   p:4,  c:6,  fa:2},
-      ]},
-      { icon:'🍵', name:'Evening Snack', time:'4:30 PM', kcal:kcals[3], color:'var(--accent3)', foods:[
-        {e:'🫛',n:'Roasted chana / chickpeas (30g)',               p:6,  c:12, fa:2},
-        {e:'🍵',n:'Green tea (unsweetened)',                       p:0,  c:0,  fa:0},
-      ]},
-      { icon:'🌙', name:'Dinner', time:'7:30 PM', kcal:kcals[4], color:'#818cf8', foods:[
-        {e:'🥬',n:'Palak paneer / tofu spinach curry (200g)',     p:20, c:10, fa:12},
-        {e:'🫓',n:'Whole wheat roti (2)',                          p:6,  c:30, fa:2},
-        {e:'🥗',n:'Mixed vegetable raita (150g)',                  p:5,  c:8,  fa:2},
-      ]},
-    ];
-    if (goal === 'gain') return [
-      { icon:'🌅', name:'Breakfast', time:'7:00 AM', kcal:kcals[0], color:'var(--warn)', foods:[
-        {e:'🥞',n:'Whole wheat pancakes (3 medium)',               p:12, c:55, fa:6},
-        {e:'🍌',n:'Banana (1 large)',                              p:1,  c:30, fa:0},
-        {e:'🥛',n:'Full-fat milk (300ml)',                         p:10, c:14, fa:10},
-        {e:'🌰',n:'Peanut butter (2 tbsp)',                        p:8,  c:6,  fa:16},
-      ]},
-      { icon:'🥤', name:'Mid-Morning', time:'10:00 AM', kcal:kcals[1], color:'var(--accent)', foods:[
-        {e:'🥤',n:'Banana + peanut butter protein shake',          p:20, c:35, fa:8},
-        {e:'🌰',n:'Mixed nuts (30g)',                              p:5,  c:5,  fa:15},
-      ]},
-      { icon:'☀️', name:'Lunch', time:'1:00 PM', kcal:kcals[2], color:'var(--accent2)', foods:[
-        {e:'🫘',n:'Rajma / kidney bean curry (250g)',              p:16, c:38, fa:4},
-        {e:'🍚',n:'White rice (200g cooked)',                      p:5,  c:52, fa:1},
-        {e:'🧀',n:'Paneer bhurji (100g)',                          p:18, c:4,  fa:14},
-        {e:'🥗',n:'Salad with olive oil dressing',                 p:2,  c:8,  fa:5},
-      ]},
-      { icon:'🍌', name:'Pre-Workout Snack', time:'4:00 PM', kcal:kcals[3], color:'var(--accent3)', foods:[
-        {e:'🍌',n:'Banana (1)',                                    p:1,  c:27, fa:0},
-        {e:'🥛',n:'Greek yogurt (200g)',                           p:20, c:8,  fa:0},
-      ]},
-      { icon:'🌙', name:'Dinner', time:'8:00 PM', kcal:kcals[4], color:'#818cf8', foods:[
-        {e:'🍛',n:'Chhole / chickpea masala (250g)',               p:18, c:42, fa:5},
-        {e:'🫓',n:'Whole wheat roti (3)',                          p:9,  c:45, fa:3},
-        {e:'🥛',n:'Full-fat milk (200ml)',                         p:7,  c:10, fa:7},
-      ]},
-    ];
-    // maintain veg
     return [
       { icon:'🌅', name:'Breakfast', time:'7:30 AM', kcal:kcals[0], color:'var(--warn)', foods:[
-        {e:'🥚',n:'Scrambled tofu / paneer (150g)',                p:18, c:4,  fa:9},
-        {e:'🍞',n:'Multigrain toast (2 slices)',                   p:6,  c:28, fa:2},
-        {e:'🫐',n:'Mixed berries (80g)',                           p:1,  c:10, fa:0},
+        { e:'🥣', n:'Rolled oats (50g) + chia seeds', p:8, c:35, fa:5 },
+        { e:'🥛', n:'Greek yogurt (150g)', p:15, c:6, fa:2 },
+        { e:'🫐', n:'Mixed berries (80g)', p:1, c:10, fa:0 }
       ]},
-      { icon:'🍎', name:'Morning Snack', time:'11:00 AM', kcal:kcals[1], color:'var(--accent)', foods:[
-        {e:'🍊',n:'Orange (1 large)',                              p:1,  c:18, fa:0},
-        {e:'🥜',n:'Walnuts (20g)',                                 p:4,  c:3,  fa:13},
+      { icon:'🍎', name:'Mid-Morning Snack', time:'10:30 AM', kcal:kcals[1], color:'var(--accent)', foods:[
+        { e:'🍎', n:'Medium apple', p:0, c:22, fa:0 },
+        { e:'🥜', n:'Raw almonds (15g)', p:3, c:2, fa:8 }
       ]},
       { icon:'☀️', name:'Lunch', time:'1:00 PM', kcal:kcals[2], color:'var(--accent2)', foods:[
-        {e:'🥣',n:'Quinoa bowl (150g cooked)',                     p:8,  c:28, fa:3},
-        {e:'🫘',n:'Mixed beans (100g)',                            p:8,  c:20, fa:1},
-        {e:'🥗',n:'Grilled vegetables + olive oil',               p:3,  c:15, fa:7},
-        {e:'🧀',n:'Feta cheese (30g)',                             p:4,  c:1,  fa:6},
+        { e:'🫘', n:'Lentil dal / rajma (200g cooked)', p:16, c:32, fa:3 },
+        { e:'🧀', n:'Paneer or Tofu (80g)', p:15, c:3, fa:10 },
+        { e:'🍚', n:'Brown rice or 2 whole wheat rotis', p:5, c:30, fa:2 },
+        { e:'🥗', n:'Fresh cucumber & tomato salad', p:1, c:6, fa:0 }
       ]},
-      { icon:'🍵', name:'Afternoon Snack', time:'4:30 PM', kcal:kcals[3], color:'var(--accent3)', foods:[
-        {e:'🥛',n:'Greek yogurt (150g)',                           p:15, c:6,  fa:0},
-        {e:'🍯',n:'Honey (1 tsp)',                                 p:0,  c:6,  fa:0},
+      { icon:'🌙', name:'Dinner', time:'7:30 PM', kcal:kcals[3], color:'#818cf8', foods:[
+        { e:'🥬', n:'Palak paneer / vegetable tofu curry', p:18, c:12, fa:10 },
+        { e:'🫓', n:'Whole wheat roti (2)', p:6, c:30, fa:2 },
+        { e:'🥛', n:'Buttermilk / light curd', p:4, c:5, fa:2 }
+      ]}
+    ];
+  } else {
+    return [
+      { icon:'🌅', name:'Breakfast', time:'7:30 AM', kcal:kcals[0], color:'var(--warn)', foods:[
+        { e:'🥚', n:'Whole eggs (2) + 2 egg whites scrambled', p:20, c:2, fa:12 },
+        { e:'🍞', n:'Whole grain toast (1 slice)', p:4, c:15, fa:1 },
+        { e:'🥑', n:'Sliced avocado or olive oil drizzle', p:1, c:4, fa:8 }
       ]},
-      { icon:'🌙', name:'Dinner', time:'7:30 PM', kcal:kcals[4], color:'#818cf8', foods:[
-        {e:'🍛',n:'Vegetable curry with tofu (250g)',              p:18, c:20, fa:10},
-        {e:'🍚',n:'Brown rice (120g cooked)',                      p:3,  c:28, fa:1},
-        {e:'🥗',n:'Green salad',                                   p:2,  c:6,  fa:2},
+      { icon:'🍎', name:'Mid-Morning Snack', time:'10:30 AM', kcal:kcals[1], color:'var(--accent)', foods:[
+        { e:'🍎', n:'1 fresh orange or apple', p:1, c:20, fa:0 },
+        { e:'🌰', n:'Walnuts (15g)', p:3, c:2, fa:10 }
       ]},
+      { icon:'☀️', name:'Lunch', time:'1:00 PM', kcal:kcals[2], color:'var(--accent2)', foods:[
+        { e:'🍗', n:'Grilled chicken breast (150g)', p:38, c:0, fa:4 },
+        { e:'🍠', n:'Steamed sweet potato or brown rice', p:3, c:30, fa:0 },
+        { e:'🥦', n:'Steamed broccoli & green beans', p:3, c:8, fa:0 }
+      ]},
+      { icon:'🌙', name:'Dinner', time:'7:30 PM', kcal:kcals[3], color:'#818cf8', foods:[
+        { e:'🐟', n:'Baked white fish or salmon (150g)', p:32, c:0, fa:8 },
+        { e:'🥗', n:'Large mixed salad with olive oil', p:2, c:8, fa:8 },
+        { e:'🍚', n:'Quinoa or small roti portion', p:4, c:20, fa:2 }
+      ]}
     ];
   }
-
-  // NON-VEG
-  if (goal === 'lose') return [
-    { icon:'🌅', name:'Breakfast', time:'7:00 AM', kcal:kcals[0], color:'var(--warn)', foods:[
-      {e:'🥚',n:'Boiled eggs (3 whole)',                           p:18, c:2,  fa:15},
-      {e:'🍞',n:'Whole wheat toast (1 slice)',                     p:3,  c:14, fa:1},
-      {e:'🍅',n:'Sliced tomato + cucumber',                        p:1,  c:5,  fa:0},
-      {e:'☕',n:'Black coffee / green tea',                        p:0,  c:0,  fa:0},
-    ]},
-    { icon:'🍎', name:'Morning Snack', time:'10:30 AM', kcal:kcals[1], color:'var(--accent)', foods:[
-      {e:'🍎',n:'Apple (1 medium)',                                p:0,  c:25, fa:0},
-      {e:'🥚',n:'Hard boiled egg (1)',                             p:6,  c:0,  fa:5},
-    ]},
-    { icon:'☀️', name:'Lunch', time:'1:00 PM', kcal:kcals[2], color:'var(--accent2)', foods:[
-      {e:'🍗',n:'Grilled chicken breast (180g)',                   p:42, c:0,  fa:5},
-      {e:'🥗',n:'Large mixed salad (200g)',                        p:3,  c:12, fa:2},
-      {e:'🍠',n:'Sweet potato (150g boiled)',                      p:2,  c:28, fa:0},
-      {e:'🫒',n:'Olive oil dressing (1 tbsp)',                     p:0,  c:0,  fa:14},
-    ]},
-    { icon:'🥤', name:'Evening Snack', time:'4:30 PM', kcal:kcals[3], color:'var(--accent3)', foods:[
-      {e:'🥛',n:'Low-fat Greek yogurt (150g)',                     p:15, c:7,  fa:0},
-      {e:'🌰',n:'Almonds (15g)',                                   p:3,  c:2,  fa:8},
-    ]},
-    { icon:'🌙', name:'Dinner', time:'7:30 PM', kcal:kcals[4], color:'#818cf8', foods:[
-      {e:'🐟',n:'Baked salmon / fish (200g)',                      p:40, c:0,  fa:14},
-      {e:'🥦',n:'Steamed broccoli + beans (200g)',                 p:5,  c:14, fa:1},
-      {e:'🍚',n:'Brown rice (80g cooked)',                         p:2,  c:18, fa:0},
-    ]},
-  ];
-  if (goal === 'gain') return [
-    { icon:'🌅', name:'Breakfast', time:'7:00 AM', kcal:kcals[0], color:'var(--warn)', foods:[
-      {e:'🥚',n:'Whole eggs (4) + 2 egg whites scrambled',        p:28, c:2,  fa:20},
-      {e:'🥓',n:'Turkey bacon (3 slices)',                         p:12, c:0,  fa:5},
-      {e:'🍞',n:'Whole wheat toast (2 slices)',                    p:6,  c:28, fa:2},
-      {e:'🍌',n:'Banana (1)',                                      p:1,  c:27, fa:0},
-    ]},
-    { icon:'🥤', name:'Mid-Morning Shake', time:'10:00 AM', kcal:kcals[1], color:'var(--accent)', foods:[
-      {e:'🥤',n:'Whey protein shake (1 scoop, 300ml milk)',        p:35, c:20, fa:5},
-      {e:'🌰',n:'Mixed nuts (30g)',                                p:5,  c:5,  fa:15},
-    ]},
-    { icon:'☀️', name:'Lunch', time:'1:00 PM', kcal:kcals[2], color:'var(--accent2)', foods:[
-      {e:'🍗',n:'Chicken thighs (250g grilled)',                   p:50, c:0,  fa:18},
-      {e:'🍚',n:'White rice (200g cooked)',                        p:5,  c:52, fa:1},
-      {e:'🥗',n:'Salad + olive oil',                              p:2,  c:8,  fa:7},
-      {e:'🫘',n:'Side of lentils (100g)',                          p:9,  c:17, fa:2},
-    ]},
-    { icon:'🍌', name:'Pre-Workout', time:'4:00 PM', kcal:kcals[3], color:'var(--accent3)', foods:[
-      {e:'🍌',n:'Banana (1 large)',                                p:1,  c:30, fa:0},
-      {e:'🥚',n:'Hard boiled eggs (2)',                            p:12, c:1,  fa:10},
-    ]},
-    { icon:'🌙', name:'Dinner', time:'8:00 PM', kcal:kcals[4], color:'#818cf8', foods:[
-      {e:'🥩',n:'Lean beef / lamb (200g)',                         p:44, c:0,  fa:16},
-      {e:'🍠',n:'Sweet potato (200g)',                             p:3,  c:40, fa:0},
-      {e:'🥦',n:'Roasted vegetables (200g)',                       p:4,  c:16, fa:4},
-      {e:'🧈',n:'Butter / ghee (1 tsp)',                           p:0,  c:0,  fa:4},
-    ]},
-  ];
-  // maintain non-veg
-  return [
-    { icon:'🌅', name:'Breakfast', time:'7:30 AM', kcal:kcals[0], color:'var(--warn)', foods:[
-      {e:'🥚',n:'Omelette (3 eggs, veggies)',                      p:20, c:5,  fa:15},
-      {e:'🍞',n:'Multigrain toast (1 slice)',                      p:3,  c:14, fa:1},
-      {e:'🍊',n:'Orange juice (200ml, fresh)',                     p:2,  c:22, fa:0},
-    ]},
-    { icon:'🍎', name:'Morning Snack', time:'11:00 AM', kcal:kcals[1], color:'var(--accent)', foods:[
-      {e:'🍎',n:'Apple (1)',                                        p:0,  c:25, fa:0},
-      {e:'🥛',n:'Greek yogurt (100g)',                             p:10, c:4,  fa:0},
-    ]},
-    { icon:'☀️', name:'Lunch', time:'1:00 PM', kcal:kcals[2], color:'var(--accent2)', foods:[
-      {e:'🐟',n:'Grilled fish / tuna (180g)',                      p:38, c:0,  fa:8},
-      {e:'🍚',n:'Brown rice (150g cooked)',                        p:4,  c:34, fa:1},
-      {e:'🥗',n:'Mixed salad + dressing',                         p:2,  c:10, fa:5},
-    ]},
-    { icon:'🍵', name:'Afternoon Snack', time:'4:30 PM', kcal:kcals[3], color:'var(--accent3)', foods:[
-      {e:'🍗',n:'Chicken strips (80g grilled)',                    p:18, c:0,  fa:3},
-      {e:'🥕',n:'Carrot & celery sticks',                          p:1,  c:8,  fa:0},
-    ]},
-    { icon:'🌙', name:'Dinner', time:'7:30 PM', kcal:kcals[4], color:'#818cf8', foods:[
-      {e:'🍗',n:'Chicken curry (200g)',                            p:36, c:8,  fa:10},
-      {e:'🫓',n:'Whole wheat roti (2)',                            p:6,  c:30, fa:2},
-      {e:'🥗',n:'Raita (100g)',                                    p:4,  c:5,  fa:1},
-    ]},
-  ];
 }
 
-// ── AI COACH (Groq — Free tier) ───────────────────────────
+// ── AI COACH (OpenRouter Integrated) ──────────────────────
 let aiHistory = [];
 let aiReady = false;
-
-// OpenRouter — works from file://, browser, and APK. Free models available.
-// Has proper CORS headers so no proxy or server needed at all.
 const AI_URL = 'https://openrouter.ai/api/v1/chat/completions';
-// openrouter/free automatically picks any available free model.
-// No hardcoded model names that can go stale!
-// Get your own free key at https://openrouter.ai/keys and paste it into
-// the "Save Key" field in the app — it's stored in your browser's localStorage.
+const MY_API_KEY = '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';
 const AI_MODELS = ['openrouter/free'];
-const AI_MODEL = AI_MODELS[0];
 
 function initAI() {
   if (aiReady) return;
   aiReady = true;
-
-  const savedKey = localStorage.getItem('fp_orkey') || '';
-  const keyBar = document.getElementById('aiKeyBar');
-  if (keyBar) {
-    keyBar.style.display = 'flex';
-    if (savedKey) {
-      keyBar.style.background = 'rgba(110,231,183,.06)';
-      keyBar.style.borderColor = 'rgba(110,231,183,.2)';
-      document.getElementById('aiKeyInput').value = savedKey;
-      const st = document.getElementById('aiKeyStatus');
-      if (st) { st.textContent = '✅ Key saved — AI ready!'; st.style.color = 'var(--accent)'; }
-    }
-  }
-
   FitStorage.get('fp_ai_history').then(h => {
     if (h && h.length) {
       aiHistory = h;
@@ -1502,59 +1578,29 @@ function initAI() {
 function buildSystemPrompt() {
   const hasProfile = userData && userData.bmi;
   const profileBlock = hasProfile ? `
-USER PROFILE (from their FitPath app — use this context in every answer):
+USER PROFILE:
 - Age: ${userData.age} | Sex: ${userData.sex}
-- Weight: ${Math.round(userData.w)}kg | Height: ${Math.round(userData.h)}cm
-- BMI: ${userData.bmi.toFixed(1)} (${userData.bmi < 18.5 ? 'Underweight' : userData.bmi < 25 ? 'Normal' : userData.bmi < 30 ? 'Overweight' : 'Obese'})
-- Goal: ${userData.goal === 'lose' ? 'Lose weight' : userData.goal === 'gain' ? 'Build muscle / gain weight' : 'Maintain weight'}
-- Daily calorie target: ${userData.calT} kcal | TDEE: ${userData.tdee} kcal
-- Diet preference: ${userData.dietPref === 'veg' ? 'Vegetarian' : 'Non-vegetarian'}
-- Activity level multiplier: ${userData.act}
-- Timeline: ${userData.tl} weeks
-- Total workouts logged: ${workouts.length}
-- Current workout streak: ${calcStreak()} days
-  ` : 'User has not set up their BMI profile yet. Encourage them to do so for personalised advice.';
+- Weight: ${Math.round(userData.w)}kg (Adjusted Lean Weight: ${Math.round(userData.adjustedWeight)}kg) | Height: ${Math.round(userData.h)}cm
+- BMI: ${userData.bmi.toFixed(1)}
+- Primary Goal: ${userData.goal} | Daily Calorie Budget: ${userData.calT} kcal
+- Diet: ${userData.dietPref} | Timeline: ${userData.tl} weeks
+- Total Logged Sessions: ${workouts.length}
+` : 'User has not configured their physiological profile yet.';
 
-  return `You are FitPath AI Coach — a warm, knowledgeable, and empathetic health and fitness assistant built into the FitPath app.
-
+  return `You are FitPath AI Coach — a physiologically grounded, empathetic fitness and nutrition coach.
 ${profileBlock}
 
-YOUR EXPERTISE COVERS:
-1. FITNESS & EXERCISE — workout programming, progressive overload, cardio, HIIT, yoga, recovery, injury prevention and rehab, exercise modifications for health conditions
-2. NUTRITION & DIET — macros, micros, meal planning, caloric management, supplements (evidence-based), vegetarian/non-veg nutrition, nutrient deficiencies
-3. HEALTH CONDITIONS — provide safe, practical, evidence-based guidance for: Type 1 & 2 Diabetes, Hypertension (High/Low BP), PCOS, Thyroid (hypo/hyper), High Cholesterol, Fatty Liver, Obesity, Anaemia, Osteoporosis, Arthritis, Asthma, Heart disease, IBS, Celiac, Kidney disease, and others
-4. MENTAL HEALTH & WELLNESS — stress, sleep, motivation, habit building, body image, emotional eating, burnout
-5. WEIGHT MANAGEMENT — fat loss, muscle gain, body recomposition, plateaus, sustainable strategies
-6. SUPPLEMENTATION — protein, creatine, vitamins, minerals — what works, what doesn't, what's safe
-
-RESPONSE STYLE:
-- Be warm, encouraging, and non-judgmental
-- Use clear sections with headers (###) for detailed answers
-- Use bullet points for lists of tips or foods
-- Bold (**) key terms and important numbers
-- Keep responses thorough but scannable — not walls of text
-- When health conditions are mentioned, always include a note to consult a doctor for diagnosis/medication while still giving genuinely helpful lifestyle guidance
-- Reference the user's profile data naturally when relevant (e.g., "given your BMI of X..." or "since your goal is fat loss...")
-- Never be dismissive — every health concern deserves a thoughtful response
-- Do not refuse to help with health topics — give real, useful information
-
-IMPORTANT SAFETY RULES:
-- Always recommend consulting a doctor for diagnosis, medication changes, or emergencies
-- Never suggest stopping prescribed medication
-- For mental health crises, provide crisis resources
-- Be especially careful and evidence-based for health conditions`;
+PRINCIPLES:
+- Prioritize joint safety (for higher BMIs, recommend low-impact activities like cycling, swimming, and resistance bands).
+- Keep protein advice realistic (encourage balanced intake between 60g and 180g, avoiding absurd multi-hundred gram prescriptions).
+- Encourage structured rest / deload periods every 8–10 weeks on long weight management timelines.
+- Be warm, evidence-based, concise, and structured. Always recommend consulting a medical professional for clinical diagnosis.`;
 }
 
 async function sendAI() {
   const input = document.getElementById('aiInput');
   const msg = input.value.trim();
   if (!msg) return;
-
-  const apiKey = localStorage.getItem('fp_orkey') || '';
-  if (!apiKey) {
-    appendErrorBubble('Please enter your free OpenRouter API key above. Get one free at openrouter.ai — no credit card needed!');
-    return;
-  }
 
   input.value = '';
   input.style.height = 'auto';
@@ -1568,15 +1614,14 @@ async function sendAI() {
   scrollChat();
 
   try {
-    // Try each free model in order until one works
-    let response, lastError;
+    let response;
     for (const model of AI_MODELS) {
       try {
         response = await fetch(AI_URL, {
           method: 'POST',
           headers: {
             'Content-Type': 'application/json',
-            'Authorization': `Bearer ${apiKey}`,
+            'Authorization': `Bearer ${MY_API_KEY}`,
             'HTTP-Referer': 'https://fitpath.app',
             'X-Title': 'FitPath AI Coach'
           },
@@ -1589,38 +1634,26 @@ async function sendAI() {
             ]
           })
         });
-        if (response.status === 429) {
-          // This model is rate limited, try the next one
-          lastError = `Model ${model} rate limited, trying next...`;
-          continue;
-        }
-        break; // Got a valid response, stop trying
-      } catch(e) {
-        lastError = e.message;
-        continue;
-      }
+        if (response.status === 429) continue;
+        break;
+      } catch(e) { continue; }
     }
 
     typing.style.display = 'none';
 
     if (!response || !response.ok) {
-      const err = await response?.json().catch(() => ({}));
-      if (response?.status === 401) throw new Error('Invalid API key. Double-check your OpenRouter key (starts with sk-or-...) and try again.');
-      if (response?.status === 429) throw new Error('All free models are rate limited right now. Wait 1–2 minutes and try again — the limits reset quickly!');
-      throw new Error(err.error?.message || lastError || `Error ${response?.status}`);
+      throw new Error('AI Coach service is currently busy. Please try again in 1 minute.');
     }
 
     const data = await response.json();
-    const reply = data.choices?.[0]?.message?.content || 'Sorry, no response generated.';
-
+    const reply = data.choices?.[0]?.message?.content || 'No response generated.';
     aiHistory.push({ role: 'assistant', content: reply });
     if (aiHistory.length > 40) aiHistory = aiHistory.slice(-40);
     FitStorage.set('fp_ai_history', aiHistory);
     appendBotBubble(reply);
-
   } catch (err) {
     typing.style.display = 'none';
-    appendErrorBubble(err.message || 'Something went wrong. Please try again.');
+    appendErrorBubble(err.message || 'Error communicating with AI service.');
   }
 
   document.getElementById('aiSendBtn').disabled = false;
@@ -1634,30 +1667,24 @@ function quickAsk(msg) {
 
 function appendUserBubble(text) {
   const win = document.getElementById('aiChatWindow');
-  const time = new Date().toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' });
+  const time = new Date().toLocaleTimeString([], { hour:'2-digit', minute:'2-digit' });
   const div = document.createElement('div');
   div.className = 'ai-msg ai-msg-user';
   div.innerHTML = `
     <div class="ai-msg-avatar">👤</div>
-    <div>
-      <div class="ai-msg-bubble">${escapeHtml(text)}</div>
-      <div class="ai-msg-time">${time}</div>
-    </div>`;
+    <div><div class="ai-msg-bubble">${escapeHtml(text)}</div><div class="ai-msg-time">${time}</div></div>`;
   win.appendChild(div);
   scrollChat();
 }
 
 function appendBotBubble(text) {
   const win = document.getElementById('aiChatWindow');
-  const time = new Date().toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' });
+  const time = new Date().toLocaleTimeString([], { hour:'2-digit', minute:'2-digit' });
   const div = document.createElement('div');
   div.className = 'ai-msg ai-msg-bot';
   div.innerHTML = `
     <div class="ai-msg-avatar">🤖</div>
-    <div>
-      <div class="ai-msg-bubble">${formatAIText(text)}</div>
-      <div class="ai-msg-time">${time}</div>
-    </div>`;
+    <div><div class="ai-msg-bubble">${formatAIText(text)}</div><div class="ai-msg-time">${time}</div></div>`;
   win.appendChild(div);
   scrollChat();
 }
@@ -1680,43 +1707,21 @@ function escapeHtml(t) {
   return t.replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/\n/g,'<br>');
 }
 
-// Convert markdown-lite to HTML for bot responses
 function formatAIText(text) {
   return text
-    // Headers
     .replace(/^### (.+)$/gm, '<h3>$1</h3>')
     .replace(/^## (.+)$/gm, '<h3>$1</h3>')
-    // Bold
     .replace(/\*\*(.+?)\*\*/g, '<strong>$1</strong>')
-    // Italic
     .replace(/\*(.+?)\*/g, '<em>$1</em>')
-    // Bullet lists
     .replace(/^[\-•] (.+)$/gm, '<li>$1</li>')
     .replace(/(<li>.*<\/li>)/gs, '<ul>$1</ul>')
-    // Numbered lists
     .replace(/^\d+\. (.+)$/gm, '<li>$1</li>')
-    // Line breaks
     .replace(/\n\n/g, '</p><p>')
     .replace(/\n/g, '<br>')
-    // Wrap in paragraph if not starting with block element
     .replace(/^(?!<[hup])(.)/s, '<p>$1')
     + (text.endsWith('>') ? '' : '</p>');
 }
 
-function saveApiKey() {
-  const key = document.getElementById('aiKeyInput')?.value?.trim();
-  if (!key || !key.startsWith('sk-or-')) {
-    alert('Please enter a valid OpenRouter API key. It starts with sk-or-...');
-    return;
-  }
-  localStorage.setItem('fp_orkey', key);
-  const bar = document.getElementById('aiKeyBar');
-  if (bar) { bar.style.background = 'rgba(110,231,183,.06)'; bar.style.borderColor = 'rgba(110,231,183,.2)'; }
-  const st = document.getElementById('aiKeyStatus');
-  if (st) { st.textContent = '✅ Key saved — AI ready!'; st.style.color = 'var(--accent)'; }
-}
-
-// Clear chat
 function clearAIChat() {
   aiHistory = [];
   FitStorage.set('fp_ai_history', []);
@@ -1728,131 +1733,60 @@ function clearAIChat() {
     </div>`;
 }
 
-// ── EXPORT / IMPORT ───────────────────────────────────────
+// ── BACKUP & EXPORT ───────────────────────────────────────
 function exportJSON() {
-  if (!workouts.length) { alert('No workouts logged yet — nothing to export!'); return; }
-  const payload = {
-    exportedAt: new Date().toISOString(),
-    version: '1.0',
-    profile: userData,
-    workouts: workouts
-  };
+  if (!workouts.length) { alert('No workouts logged yet to export!'); return; }
+  const payload = { exportedAt: new Date().toISOString(), profile: userData, workouts: workouts };
   const blob = new Blob([JSON.stringify(payload, null, 2)], { type: 'application/json' });
-  const url = URL.createObjectURL(blob);
   const a = document.createElement('a');
-  a.href = url;
+  a.href = URL.createObjectURL(blob);
   a.download = `fitpath-backup-${new Date().toISOString().split('T')[0]}.json`;
   a.click();
-  URL.revokeObjectURL(url);
 }
 
 function exportCSV() {
-  if (!workouts.length) { alert('No workouts logged yet — nothing to export!'); return; }
+  if (!workouts.length) { alert('No workouts logged yet to export!'); return; }
   const headers = ['Date', 'Type', 'Duration (min)', 'Calories Burned', 'Notes'];
-  const rows = workouts.map(w => [
-    w.date,
-    w.type,
-    w.dur,
-    w.cals || 0,
-    (w.notes || '').replace(/,/g, ';')
-  ]);
+  const rows = workouts.map(w => [w.date, w.type, w.dur, w.cals || 0, (w.notes || '').replace(/,/g, ';')]);
   const csv = [headers, ...rows].map(r => r.join(',')).join('\n');
   const blob = new Blob([csv], { type: 'text/csv' });
-  const url = URL.createObjectURL(blob);
   const a = document.createElement('a');
-  a.href = url;
+  a.href = URL.createObjectURL(blob);
   a.download = `fitpath-workouts-${new Date().toISOString().split('T')[0]}.csv`;
   a.click();
-  URL.revokeObjectURL(url);
 }
 
 function importFile(e) {
   const file = e.target.files[0];
   if (!file) return;
-  const name = file.name.toLowerCase();
-  document.getElementById('importStatus').textContent = 'Reading file...';
   const reader = new FileReader();
   reader.onload = function(ev) {
     try {
-      if (name.endsWith('.json')) {
-        importFromJSON(ev.target.result);
-      } else if (name.endsWith('.csv')) {
-        importFromCSV(ev.target.result);
-      } else {
-        document.getElementById('importStatus').textContent = '❌ Unsupported file. Please use a .json or .csv file.';
+      if (file.name.endsWith('.json')) {
+        const data = JSON.parse(ev.target.result);
+        if (data.workouts) {
+          const ids = new Set(workouts.map(w => w.id));
+          const toAdd = data.workouts.filter(w => !ids.has(w.id));
+          workouts = [...workouts, ...toAdd].sort((a, b) => b.id - a.id);
+          save();
+          renderRecords();
+          document.getElementById('importStatus').textContent = `✅ Restored ${toAdd.length} workouts!`;
+        }
       }
     } catch (err) {
-      document.getElementById('importStatus').textContent = '❌ Could not read file. Make sure it\'s a valid FitPath export.';
+      document.getElementById('importStatus').textContent = '❌ Could not parse backup file.';
     }
   };
   reader.readAsText(file);
-  e.target.value = '';
 }
 
-function importFromJSON(text) {
-  const data = JSON.parse(text);
-  if (!data.workouts || !Array.isArray(data.workouts)) {
-    document.getElementById('importStatus').textContent = '❌ Invalid JSON format.';
-    return;
-  }
-  const existingIds = new Set(workouts.map(w => w.id));
-  const newOnes = data.workouts.filter(w => !existingIds.has(w.id));
-  workouts = [...workouts, ...newOnes].sort((a, b) => b.id - a.id);
-  if (data.profile && !userData.bmi) userData = data.profile;
-  save();
-  renderRecords();
-  const msg = newOnes.length > 0
-    ? `✅ Imported ${newOnes.length} workout${newOnes.length > 1 ? 's' : ''} from JSON!`
-    : '✅ Already up to date — no new entries.';
-  document.getElementById('importStatus').textContent = msg;
-}
-
-function importFromCSV(text) {
-  const lines = text.trim().split('\n').filter(l => l.trim());
-  // Skip header row
-  const dataLines = lines[0].toLowerCase().includes('date') ? lines.slice(1) : lines;
-  if (!dataLines.length) {
-    document.getElementById('importStatus').textContent = '❌ CSV appears to be empty.';
-    return;
-  }
-  const existingKeys = new Set(workouts.map(w => `${w.date}_${w.type}_${w.dur}`));
-  let added = 0;
-  for (const line of dataLines) {
-    // Handle quoted fields
-    const cols = line.match(/(".*?"|[^,]+|(?<=,)(?=,)|^(?=,)|(?<=,)$)/g) || line.split(',');
-    const clean = cols.map(c => c.replace(/^"|"$/g, '').trim());
-    const [date, type, dur, cals, ...notesParts] = clean;
-    if (!date || !type || !dur) continue;
-    const key = `${date}_${type}_${parseInt(dur)}`;
-    if (existingKeys.has(key)) continue;
-    const d = new Date(date);
-    const disp = isNaN(d) ? date : d.toLocaleDateString('en-GB', { day:'2-digit', month:'short', year:'numeric' });
-    workouts.push({
-      id: Date.now() + Math.random(),
-      date: date,
-      disp: disp,
-      type: type,
-      dur: parseInt(dur) || 0,
-      cals: parseInt(cals) || 0,
-      notes: notesParts.join(',').replace(/;/g, ',').trim()
-    });
-    existingKeys.add(key);
-    added++;
-  }
-  workouts.sort((a, b) => b.id - a.id);
-  save();
-  renderRecords();
-  const msg = added > 0
-    ? `✅ Imported ${added} workout${added > 1 ? 's' : ''} from CSV!`
-    : '✅ Already up to date — no new entries.';
-  document.getElementById('importStatus').textContent = msg;
-}
-
-// ── INIT ──────────────────────────────────────────────────
-window.addEventListener('DOMContentLoaded',()=>{
+// ── INITIALIZATION ────────────────────────────────────────
+window.addEventListener('DOMContentLoaded', () => {
   initDate();
   renderRecords();
-  if(userData&&userData.bmi) { try{renderBMI();}catch(e){} }
+  if (userData && userData.bmi) {
+    try { renderBMI(); } catch(e){}
+  }
 });
 </script>
 </body>
